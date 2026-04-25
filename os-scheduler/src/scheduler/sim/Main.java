@@ -4,34 +4,67 @@ import scheduler.sim.model.GanttEntry;
 import scheduler.sim.model.Process;
 import scheduler.sim.model.Result;
 import scheduler.sim.scheduler.RoundRobin;
+import scheduler.sim.scheduler.SRTF;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+
     public static void main(String[] args) {
+
+        // ===== Input Processes =====
         List<Process> processes = new ArrayList<>();
-        processes.add(new Process("P1", 0, 5));
-        processes.add(new Process("P2", 1, 3));
-        processes.add(new Process("P3", 2, 1));
-        processes.add(new Process("P4", 3, 2));
 
-        RoundRobin roundRobin = new RoundRobin(2);
-        Result result = roundRobin.schedule(processes);
+        processes.add(new Process("P1", 0, 8));
+        processes.add(new Process("P2", 1, 4));
+        processes.add(new Process("P3", 2, 2));
+        processes.add(new Process("P4", 3, 1));
 
-        System.out.println("=== Gantt Chart ===");
-        for (GanttEntry entry : result.getGanttChart()) {
-            System.out.println(entry);
+        // ===== Round Robin =====
+        RoundRobin rr = new RoundRobin(2); // quantum = 2
+        Result rrResult = rr.schedule(cloneList(processes));
+
+        System.out.println("========== ROUND ROBIN ==========");
+        printGantt(rrResult.getGanttChart());
+        printResults(rrResult);
+
+        // ===== SRTF =====
+        SRTF srtf = new SRTF();
+        Result srtfResult = srtf.schedule(cloneList(processes));
+
+        System.out.println("\n========== SRTF ==========");
+        printGantt(srtfResult.getGanttChart());
+        printResults(srtfResult);
+    }
+
+    // ===== مهم: clone علشان كل algorithm يشتغل لوحده =====
+    private static List<Process> cloneList(List<Process> original) {
+        List<Process> copy = new ArrayList<>();
+        for (Process p : original) {
+            copy.add(new Process(p.getId(), p.getArrivalTime(), p.getBurstTime()));
         }
+        return copy;
+    }
 
-        System.out.println("\n=== Process Results ===");
+    // ===== Gantt Chart =====
+    public static void printGantt(List<GanttEntry> gantt) {
+        System.out.println("--- Gantt Chart ---");
+        for (GanttEntry g : gantt) {
+            System.out.println(g);
+        }
+    }
+
+    // ===== Results =====
+    public static void printResults(Result result) {
+        System.out.println("\n--- Process Results ---");
         for (Process p : result.getFinishedProcesses()) {
             System.out.println(
                     p.getId() +
-                    " | WT=" + p.getWaitingTime() +
-                    " | TAT=" + p.getTurnaroundTime() +
-                    " | RT=" + p.getResponseTime() +
-                    " | CT=" + p.getCompletionTime()
+                            " | WT=" + p.getWaitingTime() +
+                            " | TAT=" + p.getTurnaroundTime() +
+                            " | RT=" + p.getResponseTime() +
+                            " | CT=" + p.getCompletionTime()
             );
         }
     }

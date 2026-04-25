@@ -6,35 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d78e93bd-28f5-400f-8601-a6fa613bc27f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/os-scheduler.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/resources/main.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/scheduler/sim/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/scheduler/sim/gui/GanttChartView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/scheduler/sim/gui/MainController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/scheduler/sim/metrics/Metrics.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/scheduler/sim/model/GanttEntry.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/scheduler/sim/model/Process.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/scheduler/sim/model/Result.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/scheduler/sim/scheduler/RoundRobin.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/scheduler/sim/scheduler/SRTF.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/scheduler/sim/scheduler/Scheduler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/scheduler/sim/util/Validator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/screenshots/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/test-cases/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-scheduler/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-scheduler/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-scheduler/resources/main.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-scheduler/scheduler/sim/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-scheduler/scheduler/sim/model/GanttEntry.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-scheduler/scheduler/sim/model/Process.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-scheduler/scheduler/sim/model/Result.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-scheduler/scheduler/sim/scheduler/RoundRobin.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-scheduler/scheduler/sim/scheduler/SRTF.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-scheduler/scheduler/sim/scheduler/Scheduler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-scheduler/screenshots/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/os-scheduler/test-cases/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/os-scheduler/src/scheduler/sim/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/os-scheduler/src/scheduler/sim/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/os-scheduler/src/scheduler/sim/scheduler/SRTF.java" beforeDir="false" afterPath="$PROJECT_DIR$/os-scheduler/src/scheduler/sim/scheduler/SRTF.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +37,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
