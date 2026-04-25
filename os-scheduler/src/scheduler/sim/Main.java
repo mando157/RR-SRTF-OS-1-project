@@ -29,16 +29,20 @@ public class Main {
         printGantt(rrResult.getGanttChart());
         printResults(rrResult);
 
-        // ===== SRTF =====
+        //! ===== SRTF =====
+
         SRTF srtf = new SRTF();
         Result srtfResult = srtf.schedule(cloneList(processes));
 
-        System.out.println("\n========== SRTF ==========");
+        System.out.println("");
+        System.out.println(" <<<<<<<<<<<<<<<  SRTF Testing  >>>>>>>>>>>>>>>");
+        System.out.println("");
+
         printGantt(srtfResult.getGanttChart());
         printResults(srtfResult);
     }
 
-    // ===== مهم: clone علشان كل algorithm يشتغل لوحده =====
+    //! ===== مهم: clone علشان كل algorithm يشتغل لوحده =====
     private static List<Process> cloneList(List<Process> original) {
         List<Process> copy = new ArrayList<>();
         for (Process p : original) {
@@ -47,7 +51,7 @@ public class Main {
         return copy;
     }
 
-    // ===== Gantt Chart =====
+    //! ===== Gantt Chart =====
     public static void printGantt(List<GanttEntry> gantt) {
         System.out.println("--- Gantt Chart ---");
         for (GanttEntry g : gantt) {
@@ -55,7 +59,7 @@ public class Main {
         }
     }
 
-    // ===== Results =====
+    //! ===== Results =====
     public static void printResults(Result result) {
         System.out.println("\n--- Process Results ---");
         for (Process p : result.getFinishedProcesses()) {
@@ -64,8 +68,7 @@ public class Main {
                             " | WT=" + p.getWaitingTime() +
                             " | TAT=" + p.getTurnaroundTime() +
                             " | RT=" + p.getResponseTime() +
-                            " | CT=" + p.getCompletionTime()
-            );
+                            " | CT=" + p.getCompletionTime());
         }
     }
 }

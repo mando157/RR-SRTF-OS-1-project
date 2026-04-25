@@ -22,6 +22,7 @@ public class SRTF implements Scheduler {
 
         for (Process p : processes) {
             p.setRemainingTime(p.getBurstTime());
+            p.setStartTime(-1);
         }
 
         Process currentProcess = null;
@@ -33,23 +34,45 @@ public class SRTF implements Scheduler {
 
             for (Process p : processes) {
                 if (p.getArrivalTime() <= currentTime && p.getRemainingTime() > 0) {
+
                     if (shortest == null ||
                             p.getRemainingTime() < shortest.getRemainingTime() ||
-                            (p.getRemainingTime() == shortest.getRemainingTime()
-                                    && p.getArrivalTime() < shortest.getArrivalTime())) {
+                            (
+                                    p.getRemainingTime() == shortest.getRemainingTime()
+                                            && (
+                                            p.getArrivalTime() < shortest.getArrivalTime()
+                                                    ||
+                                                    (
+                                                            p.getArrivalTime() == shortest.getArrivalTime()
+                                                                    && p.getId().compareTo(shortest.getId()) < 0
+                                                    )
+                                    )
+                            )) {
                         shortest = p;
                     }
                 }
             }
 
             if (shortest == null) {
+                int idleStart = currentTime;
                 currentTime++;
+
+                while (completedCount < n && !hasArrivedProcess(processes, currentTime)) {
+                    currentTime++;
+                }
+
+                gantt.add(new GanttEntry("Idle", idleStart, currentTime));
                 continue;
             }
 
             if (currentProcess != shortest) {
+
                 if (currentProcess != null) {
-                    gantt.add(new GanttEntry(currentProcess.getId(), startTime, currentTime));
+                    gantt.add(new GanttEntry(
+                            currentProcess.getId(),
+                            startTime,
+                            currentTime
+                    ));
                 }
 
                 currentProcess = shortest;
@@ -57,19 +80,37 @@ public class SRTF implements Scheduler {
 
                 if (currentProcess.getStartTime() == -1) {
                     currentProcess.setStartTime(currentTime);
-                    currentProcess.setResponseTime(currentTime - currentProcess.getArrivalTime());
+                    currentProcess.setResponseTime(
+                            currentTime - currentProcess.getArrivalTime()
+                    );
                 }
             }
 
-            currentProcess.setRemainingTime(currentProcess.getRemainingTime() - 1);
+            currentProcess.setRemainingTime(
+                    currentProcess.getRemainingTime() - 1
+            );
+
             currentTime++;
 
             if (currentProcess.getRemainingTime() == 0) {
-                currentProcess.setCompletionTime(currentTime);
-                currentProcess.setTurnaroundTime(currentProcess.getCompletionTime() - currentProcess.getArrivalTime());
-                currentProcess.setWaitingTime(currentProcess.getTurnaroundTime() - currentProcess.getBurstTime());
 
-                gantt.add(new GanttEntry(currentProcess.getId(), startTime, currentTime));
+                currentProcess.setCompletionTime(currentTime);
+
+                currentProcess.setTurnaroundTime(
+                        currentProcess.getCompletionTime()
+                                - currentProcess.getArrivalTime()
+                );
+
+                currentProcess.setWaitingTime(
+                        currentProcess.getTurnaroundTime()
+                                - currentProcess.getBurstTime()
+                );
+
+                gantt.add(new GanttEntry(
+                        currentProcess.getId(),
+                        startTime,
+                        currentTime
+                ));
 
                 completed.add(currentProcess);
                 completedCount++;
@@ -78,6 +119,16 @@ public class SRTF implements Scheduler {
         }
 
         completed.sort(Comparator.comparing(Process::getId));
+
         return new Result(gantt, completed);
+    }
+
+    private boolean hasArrivedProcess(List<Process> processes, int currentTime) {
+        for (Process p : processes) {
+            if (p.getArrivalTime() <= currentTime && p.getRemainingTime() > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 }
