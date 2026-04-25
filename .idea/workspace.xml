@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d78e93bd-28f5-400f-8601-a6fa613bc27f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/os-scheduler.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/RR-SRTF-OS-1-project-main/os-scheduler/src/README.md" beforeDir="false" />
