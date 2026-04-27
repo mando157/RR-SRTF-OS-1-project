@@ -8,32 +8,31 @@ import java.util.List;
 
 public class Metrics {
 
-    public static void printResults(String algorithmName, Result result) {
+    public static String getResultsString(String algorithmName, Result result) {
         List<Process> processes = result.getFinishedProcesses();
         
         if (processes == null || processes.isEmpty()) {
-            System.out.println("\n No processes to display for " + algorithmName);
-            return;
+            return "\n No processes to display for " + algorithmName;
         }
 
-       
+        StringBuilder sb = new StringBuilder();
         double totalTAT = 0, totalWT = 0, totalRT = 0;
         
-        System.out.println("\n╔════════════════════════════════════════════════════════════════╗");
-        System.out.printf("║                    %-35s ║\n", algorithmName + " Results");
-        System.out.println("╠════════════════════════════════════════════════════════════════╣");
-        System.out.println("║  Process │ TAT  │  WT  │  RT  │ Burst │ Start │ Complete  ║");
-        System.out.println("╠════════════════════════════════════════════════════════════════╣");
+        sb.append("\n╔════════════════════════════════════════════════════════════════╗\n");
+        sb.append(String.format("║                    %-35s ║\n", algorithmName + " Results"));
+        sb.append("╠════════════════════════════════════════════════════════════════╣\n");
+        sb.append("║  Process │ TAT  │  WT  │  RT  │ Burst │ Start │ Complete  ║\n");
+        sb.append("╠════════════════════════════════════════════════════════════════╣\n");
         
         for (Process p : processes) {
-            System.out.printf("║    %-4s │ %4d │ %4d │ %4d │  %3d  │  %3d  │    %3d    ║\n",
+            sb.append(String.format("║    %-4s │ %4d │ %4d │ %4d │  %3d  │  %3d  │    %3d    ║\n",
                     p.getId(), 
                     p.getTurnaroundTime(), 
                     p.getWaitingTime(), 
                     p.getResponseTime(),
                     p.getBurstTime(),
                     p.getStartTime(),
-                    p.getCompletionTime());
+                    p.getCompletionTime()));
             
             totalTAT += p.getTurnaroundTime();
             totalWT += p.getWaitingTime();
@@ -45,65 +44,62 @@ public class Metrics {
         double avgWT = totalWT / n;
         double avgRT = totalRT / n;
         
-        System.out.println("╠════════════════════════════════════════════════════════════════╣");
-        System.out.printf("║  Averages │ %.2f │ %.2f │ %.2f │        │      │           ║\n",
-                avgTAT, avgWT, avgRT);
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
+        sb.append("╠════════════════════════════════════════════════════════════════╣\n");
+        sb.append(String.format("║  Averages │ %.2f │ %.2f │ %.2f │        │      │           ║\n",
+                avgTAT, avgWT, avgRT));
+        sb.append("╚════════════════════════════════════════════════════════════════╝\n");
+        
+        return sb.toString();
     }
     
-  
-    public static void printGanttChart(String algorithmName, Result result) {
+    public static String getGanttChartString(String algorithmName, Result result) {
         List<GanttEntry> gantt = result.getGanttChart();
         
         if (gantt == null || gantt.isEmpty()) {
-            System.out.println("\n No Gantt chart available for " + algorithmName);
-            return;
+            return "\n No Gantt chart available for " + algorithmName;
         }
         
-        System.out.println( algorithmName + " - Gantt Chart:");
-        System.out.println();
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n").append(algorithmName).append(" - Gantt Chart:\n\n");
         
-   
-        System.out.print("    ");
+        sb.append("    ");
         for (int i = 0; i < gantt.size(); i++) {
-            System.out.print("+-------");
+            sb.append("+-------");
         }
-        System.out.println("+");
+        sb.append("+\n");
         
-        
-        System.out.print("    ");
+        sb.append("    ");
         for (GanttEntry entry : gantt) {
-            System.out.printf("|  %-3s ", entry.getProcessId());
+            sb.append(String.format("|  %-3s ", entry.getProcessId()));
         }
-        System.out.println("|");
+        sb.append("|\n");
         
- 
-        System.out.print("    ");
+        sb.append("    ");
         for (int i = 0; i < gantt.size(); i++) {
-            System.out.print("+-------");
+            sb.append("+-------");
         }
-        System.out.println("+");
+        sb.append("+\n");
         
-        
-        System.out.print("    ");
+        sb.append("    ");
         for (GanttEntry entry : gantt) {
-            System.out.printf("%-8d", entry.getStartTime());
+            sb.append(String.format("%-8d", entry.getStartTime()));
         }
-        System.out.println(gantt.get(gantt.size() - 1).getEndTime());
-        System.out.println();
+        sb.append(gantt.get(gantt.size() - 1).getEndTime()).append("\n\n");
+        
+        return sb.toString();
     }
     
-
-    public static void printComparison(Result rrResult, Result srtfResult, String rrName, String srtfName) {
-        System.out.println("\n╔══════════════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                           ALGORITHMS COMPARISON                              ║");
-        System.out.println("╠══════════════════════════════════════════════════════════════════════════════╣");
+    public static String getComparisonString(Result rrResult, Result srtfResult, String rrName, String srtfName) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n╔══════════════════════════════════════════════════════════════════════════════╗\n");
+        sb.append("║                           ALGORITHMS COMPARISON                              ║\n");
+        sb.append("╠══════════════════════════════════════════════════════════════════════════════╣\n");
         
         List<Process> rrProcesses = rrResult.getFinishedProcesses();
         List<Process> srtfProcesses = srtfResult.getFinishedProcesses();
         
-        System.out.printf("║ %-10s │ %15s │ %15s │ %15s ║\n", "Process", "RR - TAT/WT/RT", "SRTF - TAT/WT/RT", "Better");
-        System.out.println("╠══════════════════════════════════════════════════════════════════════════════╣");
+        sb.append(String.format("║ %-10s │ %15s │ %15s │ %15s ║\n", "Process", "RR - TAT/WT/RT", "SRTF - TAT/WT/RT", "Better"));
+        sb.append("╠══════════════════════════════════════════════════════════════════════════════╣\n");
         
         for (int i = 0; i < rrProcesses.size(); i++) {
             Process rrP = rrProcesses.get(i);
@@ -118,16 +114,15 @@ public class Metrics {
                 better = "Equal";
             }
             
-            System.out.printf("║ %-10s │ %3d/%3d/%3d │ %3d/%3d/%3d │ %15s ║\n",
+            sb.append(String.format("║ %-10s │ %3d/%3d/%3d │ %3d/%3d/%3d │ %15s ║\n",
                     rrP.getId(),
                     rrP.getTurnaroundTime(), rrP.getWaitingTime(), rrP.getResponseTime(),
                     srtfP.getTurnaroundTime(), srtfP.getWaitingTime(), srtfP.getResponseTime(),
-                    better);
+                    better));
         }
         
-        System.out.println("╠══════════════════════════════════════════════════════════════════════════════╣");
+        sb.append("╠══════════════════════════════════════════════════════════════════════════════╣\n");
         
-       
         double rrAvgTAT = calculateAvg(rrProcesses, "TAT");
         double rrAvgWT = calculateAvg(rrProcesses, "WT");
         double rrAvgRT = calculateAvg(rrProcesses, "RT");
@@ -136,35 +131,36 @@ public class Metrics {
         double srtfAvgWT = calculateAvg(srtfProcesses, "WT");
         double srtfAvgRT = calculateAvg(srtfProcesses, "RT");
         
-        System.out.printf("║ %-10s │ %5.2f/%5.2f/%5.2f │ %5.2f/%5.2f/%5.2f │ %15s ║\n",
+        sb.append(String.format("║ %-10s │ %5.2f/%5.2f/%5.2f │ %5.2f/%5.2f/%5.2f │ %15s ║\n",
                 "AVERAGE",
                 rrAvgTAT, rrAvgWT, rrAvgRT,
                 srtfAvgTAT, srtfAvgWT, srtfAvgRT,
-                (srtfAvgTAT < rrAvgTAT ? "SRTF" : "RR"));
+                (srtfAvgTAT < rrAvgTAT ? "SRTF" : "RR")));
         
-        System.out.println("╚══════════════════════════════════════════════════════════════════════════════╝");
+        sb.append("╚══════════════════════════════════════════════════════════════════════════════╝\n");
         
-   
-        System.out.println("\n💡 ANALYSIS:");
+        sb.append("\n💡 ANALYSIS:\n");
         if (srtfAvgTAT < rrAvgTAT) {
-            System.out.println("   ✓ SRTF has better (lower) average Turnaround Time");
+            sb.append("   ✓ SRTF has better (lower) average Turnaround Time\n");
         } else {
-            System.out.println("   ✓ Round Robin has better (lower) average Turnaround Time");
+            sb.append("   ✓ Round Robin has better (lower) average Turnaround Time\n");
         }
         
         if (srtfAvgWT < rrAvgWT) {
-            System.out.println("   ✓ SRTF has better (lower) average Waiting Time");
+            sb.append("   ✓ SRTF has better (lower) average Waiting Time\n");
         } else {
-            System.out.println("   ✓ Round Robin has better (lower) average Waiting Time");
+            sb.append("   ✓ Round Robin has better (lower) average Waiting Time\n");
         }
         
         if (srtfAvgRT < rrAvgRT) {
-            System.out.println("   ✓ SRTF has better (lower) average Response Time");
+            sb.append("   ✓ SRTF has better (lower) average Response Time\n");
         } else {
-            System.out.println("   ✓ Round Robin has better (lower) average Response Time");
+            sb.append("   ✓ Round Robin has better (lower) average Response Time\n");
         }
         
-        System.out.println();
+        sb.append("\n");
+        
+        return sb.toString();
     }
     
     private static double calculateAvg(List<Process> processes, String metric) {
