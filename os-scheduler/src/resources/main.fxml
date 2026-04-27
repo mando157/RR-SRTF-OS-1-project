@@ -13,8 +13,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         
-       
-        System.out.println("\n🔬 TEST CASE 1: Basic Processes");
+        System.out.println("\n TEST CASE 1: Basic Processes");
         System.out.println("=================================");
         
         List<Process> processes1 = Arrays.asList(
@@ -26,8 +25,7 @@ public class Main {
         
         runTest(processes1, "Basic Test");
         
-    
-        System.out.println("\n\n🔬 TEST CASE 2: All Processes Arrive at Time 0");
+        System.out.println("\n\n TEST CASE 2: All Processes Arrive at Time 0");
         System.out.println("===============================================");
         
         List<Process> processes2 = Arrays.asList(
@@ -39,7 +37,6 @@ public class Main {
         
         runTest(processes2, "Same Arrival Time");
         
-   
         System.out.println("\n\n TEST CASE 3: Different Arrival Times");
         System.out.println("========================================");
         
@@ -66,19 +63,18 @@ public class Main {
         
         List<Process> processesForRR = copyProcesses(processes);
         List<Process> processesForSRTF = copyProcesses(processes);
- 
+        
         RoundRobin rr = new RoundRobin(3);
         Result rrResult = rr.schedule(processesForRR);
-        Metrics.printResults(" Round Robin (Q=3)", rrResult);
-        Metrics.printGanttChart("Round Robin (Q=3)", rrResult);
+        System.out.print(Metrics.getResultsString(" Round Robin (Q=3)", rrResult));
+        System.out.print(Metrics.getGanttChartString("Round Robin (Q=3)", rrResult));
         
-   
         SRTF srtf = new SRTF();
         Result srtfResult = srtf.schedule(processesForSRTF);
-        Metrics.printResults(" SRTF", srtfResult);
-        Metrics.printGanttChart("SRTF", srtfResult);
- 
-        Metrics.printComparison(rrResult, srtfResult, "RR", "SRTF");
+        System.out.print(Metrics.getResultsString(" SRTF", srtfResult));
+        System.out.print(Metrics.getGanttChartString("SRTF", srtfResult));
+        
+        System.out.print(Metrics.getComparisonString(rrResult, srtfResult, "RR", "SRTF"));
     }
     
     private static List<Process> copyProcesses(List<Process> original) {
