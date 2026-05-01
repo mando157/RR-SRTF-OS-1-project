@@ -1,10 +1,10 @@
-/* ===== MAIN CONTAINER ===== */
+
 .root {
     -fx-background-color: #0f0f1a;
     -fx-font-family: "Segoe UI";
 }
 
-/* ===== INPUT FIELDS ===== */
+
 .text-field {
     -fx-background-color: #1a1a2e;
     -fx-text-fill: #e2e8f0;
@@ -21,7 +21,7 @@
     -fx-effect: dropshadow(gaussian, #7c3aed88, 8, 0, 0, 0);
 }
 
-/* ===== BUTTONS ===== */
+
 .btn-primary {
     -fx-background-color: #7c3aed;
     -fx-text-fill: white;
@@ -52,7 +52,7 @@
     -fx-background-color: #7c3aed22;
 }
 
-/* ===== LABELS ===== */
+
 .section-title {
     -fx-text-fill: #a855f7;
     -fx-font-size: 13px;
@@ -60,12 +60,10 @@
     -fx-padding: 4 0 4 0;
 }
 
-/* ===== SEPARATOR ===== */
 .separator .line {
     -fx-border-color: #2d2d4e;
 }
 
-/* ===== GANTT ===== */
 .gantt-container {
     -fx-background-color: #1a1a2e;
     -fx-background-radius: 10;
@@ -75,7 +73,7 @@
     -fx-border-radius: 10;
 }
 
-/* ===== TABLES ===== */
+
 .table-view {
     -fx-background-color: #1a1a2e;
     -fx-border-color: #2d2d4e;
@@ -121,7 +119,7 @@
     -fx-background-color: #16213e;
 }
 
-/* ===== COMPARISON AREA ===== */
+
 .text-area {
     -fx-background-color: #1a1a2e;
     -fx-text-fill: #e2e8f0;
@@ -141,7 +139,7 @@
     -fx-border-color: #7c3aed;
 }
 
-/* ===== SCROLL BAR ===== */
+
 .scroll-bar {
     -fx-background-color: #1a1a2e;
 }
@@ -153,4 +151,12 @@
 
 .scroll-bar .thumb:hover {
     -fx-background-color: #7c3aed;
+}
+/* COMPARISON TABLE - Winner colors */
+.comparison-table .table-row-cell:odd {
+    -fx-background-color: #1a1a2e;
+}
+
+.comparison-table .table-row-cell:even {
+    -fx-background-color: #16213e;
 }

@@ -82,12 +82,17 @@
 
         <Separator/>
 
+
         <!-- COMPARISON -->
-        <Label text="Comparison Summary" styleClass="section-title"/>
-        <TextArea fx:id="comparisonArea"
-                  prefHeight="130"
-                  editable="false"
-                  styleClass="text-area"/>
+<Label text="Comparison Summary" styleClass="section-title"/>
+<TableView fx:id="comparisonTable" prefHeight="160" styleClass="table-view">
+    <columns>
+        <TableColumn fx:id="colMetric" text="Metric"   prefWidth="180"/>
+        <TableColumn fx:id="colRR"     text="RR"       prefWidth="120"/>
+        <TableColumn fx:id="colSRTF"   text="SRTF"     prefWidth="120"/>
+        <TableColumn fx:id="colWinner" text="Winner"   prefWidth="120"/>
+    </columns>
+</TableView>
 
     </VBox>
 </ScrollPane>

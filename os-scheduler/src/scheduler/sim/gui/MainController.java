@@ -8,51 +8,78 @@ import scheduler.sim.model.Process;
 import scheduler.sim.model.Result;
 import scheduler.sim.scheduler.RoundRobin;
 import scheduler.sim.scheduler.SRTF;
+import scheduler.sim.metrics.ComparisonRow;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainController {
 
-  
-    @FXML private TextField pidField;
-    @FXML private TextField arrivalField;
-    @FXML private TextField burstField;
-    @FXML private TextField quantumField;
-    @FXML private Button addBtn;
-    @FXML private Button runBtn;
+    @FXML
+    private TextField pidField;
+    @FXML
+    private TextField arrivalField;
+    @FXML
+    private TextField burstField;
+    @FXML
+    private TextField quantumField;
+    @FXML
+    private Button addBtn;
+    @FXML
+    private Button runBtn;
 
- 
-    @FXML private TableView<Process> rrTable;
-    @FXML private TableColumn<Process, String>  rrPid;
-    @FXML private TableColumn<Process, Integer> rrAt;
-    @FXML private TableColumn<Process, Integer> rrBt;
-    @FXML private TableColumn<Process, Integer> rrWt;
-    @FXML private TableColumn<Process, Integer> rrTat;
-    @FXML private TableColumn<Process, Integer> rrRt;
+    @FXML
+    private TableView<Process> rrTable;
+    @FXML
+    private TableColumn<Process, String> rrPid;
+    @FXML
+    private TableColumn<Process, Integer> rrAt;
+    @FXML
+    private TableColumn<Process, Integer> rrBt;
+    @FXML
+    private TableColumn<Process, Integer> rrWt;
+    @FXML
+    private TableColumn<Process, Integer> rrTat;
+    @FXML
+    private TableColumn<Process, Integer> rrRt;
 
-   
-    @FXML private TableView<Process> srtfTable;
-    @FXML private TableColumn<Process, String>  srtfPid;
-    @FXML private TableColumn<Process, Integer> srtfAt;
-    @FXML private TableColumn<Process, Integer> srtfBt;
-    @FXML private TableColumn<Process, Integer> srtfWt;
-    @FXML private TableColumn<Process, Integer> srtfTat;
-    @FXML private TableColumn<Process, Integer> srtfRt;
+    @FXML
+    private TableView<Process> srtfTable;
+    @FXML
+    private TableColumn<Process, String> srtfPid;
+    @FXML
+    private TableColumn<Process, Integer> srtfAt;
+    @FXML
+    private TableColumn<Process, Integer> srtfBt;
+    @FXML
+    private TableColumn<Process, Integer> srtfWt;
+    @FXML
+    private TableColumn<Process, Integer> srtfTat;
+    @FXML
+    private TableColumn<Process, Integer> srtfRt;
 
-    
-    @FXML private GanttChart rrChart;
-    @FXML private GanttChart srtfChart;
+    @FXML
+    private GanttChart rrChart;
+    @FXML
+    private GanttChart srtfChart;
 
-   
-    @FXML private TextArea comparisonArea;
+    // @FXML private TextArea comparisonArea;
+    @FXML
+    private TableView<ComparisonRow> comparisonTable;
+    @FXML
+    private TableColumn<ComparisonRow, String> colMetric;
+    @FXML
+    private TableColumn<ComparisonRow, String> colRR;
+    @FXML
+    private TableColumn<ComparisonRow, String> colSRTF;
+    @FXML
+    private TableColumn<ComparisonRow, String> colWinner;
 
-    
     private final List<Process> processes = new ArrayList<>();
 
     @FXML
     public void initialize() {
-       
+
         rrPid.setCellValueFactory(new PropertyValueFactory<>("id"));
         rrAt.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
         rrBt.setCellValueFactory(new PropertyValueFactory<>("burstTime"));
@@ -69,9 +96,35 @@ public class MainController {
 
         addBtn.setOnAction(e -> addProcess());
         runBtn.setOnAction(e -> runSimulation());
+
+        // Comparison Table
+        colMetric.setCellValueFactory(new PropertyValueFactory<>("metric"));
+        colRR.setCellValueFactory(new PropertyValueFactory<>("rr"));
+        colSRTF.setCellValueFactory(new PropertyValueFactory<>("srtf"));
+        colWinner.setCellValueFactory(new PropertyValueFactory<>("winner"));
+
+        
+        colWinner.setCellFactory(col -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    if (item.equals("RR")) {
+                        setStyle("-fx-text-fill: #a855f7; -fx-font-weight: bold;");
+                    } else if (item.equals("SRTF")) {
+                        setStyle("-fx-text-fill: #10b981; -fx-font-weight: bold;");
+                    } else {
+                        setStyle("-fx-text-fill: #f59e0b; -fx-font-weight: bold;");
+                    }
+                }
+            }
+        });
     }
 
-   
     private void addProcess() {
         try {
             String id = pidField.getText().trim();
@@ -92,7 +145,6 @@ public class MainController {
                 return;
             }
 
-           
             for (Process p : processes) {
                 if (p.getId().equals(id)) {
                     showError("Process ID '" + id + "' already exists!");
@@ -127,25 +179,20 @@ public class MainController {
                 return;
             }
 
-           
-            List<Process> rrList   = cloneList(processes);
+            List<Process> rrList = cloneList(processes);
             List<Process> srtfList = cloneList(processes);
 
-            Result rrResult   = new RoundRobin(q).schedule(rrList);
+            Result rrResult = new RoundRobin(q).schedule(rrList);
             Result srtfResult = new SRTF().schedule(srtfList);
 
             rrTable.setItems(
-                FXCollections.observableArrayList(rrResult.getFinishedProcesses())
-            );
+                    FXCollections.observableArrayList(rrResult.getFinishedProcesses()));
             srtfTable.setItems(
-                FXCollections.observableArrayList(srtfResult.getFinishedProcesses())
-            );
+                    FXCollections.observableArrayList(srtfResult.getFinishedProcesses()));
 
-          
             rrChart.draw(rrResult.getGanttChart());
             srtfChart.draw(srtfResult.getGanttChart());
 
-           
             showComparison(rrResult, srtfResult);
 
         } catch (NumberFormatException e) {
@@ -155,32 +202,53 @@ public class MainController {
         }
     }
 
-   
+    // private void showComparison(Result rr, Result srtf) {
+    // double rrWT = avg(rr.getFinishedProcesses(), Process::getWaitingTime);
+    // double srtfWT = avg(srtf.getFinishedProcesses(), Process::getWaitingTime);
+    // double rrRT = avg(rr.getFinishedProcesses(), Process::getResponseTime);
+    // double srtfRT = avg(srtf.getFinishedProcesses(), Process::getResponseTime);
+    // double rrTAT = avg(rr.getFinishedProcesses(), Process::getTurnaroundTime);
+    // double srtfTAT = avg(srtf.getFinishedProcesses(),
+    // Process::getTurnaroundTime);
+
+    // String wWt = rrWT <= srtfWT ? "RR" : "SRTF";
+    // String wRt = rrRT <= srtfRT ? "RR" : "SRTF";
+    // String wTat = rrTAT <= srtfTAT ? "RR" : "SRTF";
+
+    // comparisonArea.setText(
+    // "===== COMPARISON SUMMARY =====\n" +
+    // "Metric | RR | SRTF | Winner\n" +
+    // "---------------|---------|---------|-------\n" +
+    // "Avg Wait Time | " + round(rrWT) + " | " + round(srtfWT) + " | " + wWt + "\n"
+    // +
+    // "Avg Resp Time | " + round(rrRT) + " | " + round(srtfRT) + " | " + wRt + "\n"
+    // +
+    // "Avg TAT | " + round(rrTAT) + " | " + round(srtfTAT) + " | " + wTat + "\n"
+    // );
+    // }
+
     private void showComparison(Result rr, Result srtf) {
-        double rrWT    = avg(rr.getFinishedProcesses(),   Process::getWaitingTime);
-        double srtfWT  = avg(srtf.getFinishedProcesses(), Process::getWaitingTime);
-        double rrRT    = avg(rr.getFinishedProcesses(),   Process::getResponseTime);
-        double srtfRT  = avg(srtf.getFinishedProcesses(), Process::getResponseTime);
-        double rrTAT   = avg(rr.getFinishedProcesses(),   Process::getTurnaroundTime);
+        double rrWT = avg(rr.getFinishedProcesses(), Process::getWaitingTime);
+        double srtfWT = avg(srtf.getFinishedProcesses(), Process::getWaitingTime);
+        double rrRT = avg(rr.getFinishedProcesses(), Process::getResponseTime);
+        double srtfRT = avg(srtf.getFinishedProcesses(), Process::getResponseTime);
+        double rrTAT = avg(rr.getFinishedProcesses(), Process::getTurnaroundTime);
         double srtfTAT = avg(srtf.getFinishedProcesses(), Process::getTurnaroundTime);
 
-        String wWt  = rrWT  <= srtfWT  ? "RR" : "SRTF";
-        String wRt  = rrRT  <= srtfRT  ? "RR" : "SRTF";
+        String wWt = rrWT <= srtfWT ? "RR" : "SRTF";
+        String wRt = rrRT <= srtfRT ? "RR" : "SRTF";
         String wTat = rrTAT <= srtfTAT ? "RR" : "SRTF";
 
-        comparisonArea.setText(
-            "===== COMPARISON SUMMARY =====\n" +
-            "Metric         |   RR    |  SRTF   | Winner\n" +
-            "---------------|---------|---------|-------\n" +
-            "Avg Wait Time  | " + round(rrWT)   + "  | " + round(srtfWT)  + "  | " + wWt  + "\n" +
-            "Avg Resp Time  | " + round(rrRT)   + "  | " + round(srtfRT)  + "  | " + wRt  + "\n" +
-            "Avg TAT        | " + round(rrTAT)  + "  | " + round(srtfTAT) + "  | " + wTat + "\n"
-        );
+        comparisonTable.setItems(FXCollections.observableArrayList(
+                new ComparisonRow("Avg Wait Time", round(rrWT), round(srtfWT), wWt),
+                new ComparisonRow("Avg Resp Time", round(rrRT), round(srtfRT), wRt),
+                new ComparisonRow("Avg TAT", round(rrTAT), round(srtfTAT), wTat)));
     }
 
-    
     @FunctionalInterface
-    interface Extractor { int get(Process p); }
+    interface Extractor {
+        int get(Process p);
+    }
 
     private double avg(List<Process> list, Extractor fn) {
         return list.stream().mapToInt(fn::get).average().orElse(0);
@@ -206,8 +274,7 @@ public class MainController {
     }
 
     private void showInfo(String msg) {
-       
+
         System.out.println("[INFO] " + msg);
     }
 }
-

@@ -152,3 +152,11 @@
 .scroll-bar .thumb:hover {
     -fx-background-color: #7c3aed;
 }
+/* COMPARISON TABLE - Winner colors */
+.comparison-table .table-row-cell:odd {
+    -fx-background-color: #1a1a2e;
+}
+
+.comparison-table .table-row-cell:even {
+    -fx-background-color: #16213e;
+}
