@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import scheduler.sim.gui.GanttChart?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="scheduler.sim.gui.MainController"
+            fitToWidth="true"
+            style="-fx-background-color: #0f0f1a; -fx-background: #0f0f1a;">
+
+    <VBox styleClass="main-container"
+          spacing="16"
+          style="-fx-background-color: #0f0f1a; -fx-padding: 20;">
+
+        <!-- INPUT -->
+        <HBox spacing="10">
+            <TextField fx:id="pidField"     promptText="Process ID"   styleClass="text-field" prefWidth="130"/>
+            <TextField fx:id="arrivalField" promptText="Arrival Time" styleClass="text-field" prefWidth="130"/>
+            <TextField fx:id="burstField"   promptText="Burst Time"   styleClass="text-field" prefWidth="130"/>
+            <Button fx:id="addBtn" text="＋ Add Process" styleClass="btn-secondary"/>
+        </HBox>
+
+        <HBox spacing="10">
+            <TextField fx:id="quantumField" promptText="Quantum (RR)" styleClass="text-field" prefWidth="130"/>
+            <Button fx:id="runBtn" text="▶ Run Simulation" styleClass="btn-primary"/>
+        </HBox>
+
+        <Separator/>
+
+        <!-- GANTT -->
+        <Label text="Round Robin — Gantt Chart" styleClass="section-title"/>
+        <ScrollPane fitToHeight="true"
+                    hbarPolicy="AS_NEEDED"
+                    vbarPolicy="NEVER"
+                    prefHeight="80"
+                    style="-fx-background-color: #1a1a2e; -fx-background: #1a1a2e; -fx-border-color: #2d2d4e; -fx-border-radius: 10;">
+            <scheduler.sim.gui.GanttChart fx:id="rrChart"/>
+        </ScrollPane>
+
+        <Label text="SRTF — Gantt Chart" styleClass="section-title"/>
+        <ScrollPane fitToHeight="true"
+                    hbarPolicy="AS_NEEDED"
+                    vbarPolicy="NEVER"
+                    prefHeight="80"
+                    style="-fx-background-color: #1a1a2e; -fx-background: #1a1a2e; -fx-border-color: #2d2d4e; -fx-border-radius: 10;">
+            <scheduler.sim.gui.GanttChart fx:id="srtfChart"/>
+        </ScrollPane>
+
+        <Separator/>
+
+        <!-- TABLES -->
+        <HBox spacing="16">
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="Round Robin Results" styleClass="section-title"/>
+                <TableView fx:id="rrTable" prefWidth="420" prefHeight="220" styleClass="table-view">
+                    <columns>
+                        <TableColumn fx:id="rrPid"  text="PID" prefWidth="60"/>
+                        <TableColumn fx:id="rrAt"   text="AT"  prefWidth="60"/>
+                        <TableColumn fx:id="rrBt"   text="BT"  prefWidth="60"/>
+                        <TableColumn fx:id="rrWt"   text="WT"  prefWidth="60"/>
+                        <TableColumn fx:id="rrTat"  text="TAT" prefWidth="60"/>
+                        <TableColumn fx:id="rrRt"   text="RT"  prefWidth="60"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="SRTF Results" styleClass="section-title"/>
+                <TableView fx:id="srtfTable" prefWidth="420" prefHeight="220" styleClass="table-view">
+                    <columns>
+                        <TableColumn fx:id="srtfPid"  text="PID" prefWidth="60"/>
+                        <TableColumn fx:id="srtfAt"   text="AT"  prefWidth="60"/>
+                        <TableColumn fx:id="srtfBt"   text="BT"  prefWidth="60"/>
+                        <TableColumn fx:id="srtfWt"   text="WT"  prefWidth="60"/>
+                        <TableColumn fx:id="srtfTat"  text="TAT" prefWidth="60"/>
+                        <TableColumn fx:id="srtfRt"   text="RT"  prefWidth="60"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </HBox>
+
+        <Separator/>
+
+        <!-- COMPARISON -->
+        <Label text="Comparison Summary" styleClass="section-title"/>
+        <TextArea fx:id="comparisonArea"
+                  prefHeight="130"
+                  editable="false"
+                  styleClass="text-area"/>
+
+    </VBox>
+</ScrollPane>
