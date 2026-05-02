@@ -21,6 +21,23 @@
             <Button fx:id="addBtn" text="＋ Add Process" styleClass="btn-secondary"/>
         </HBox>
 
+        <!-- PROCESS LIST -->
+        <Label text="Added Processes" styleClass="section-title"/>
+        <HBox spacing="10">
+            <TableView fx:id="processTable" prefHeight="150" prefWidth="500" styleClass="table-view">
+                <columns>
+                    <TableColumn fx:id="procPid" text="PID" prefWidth="100"/>
+                    <TableColumn fx:id="procAt"  text="Arrival Time" prefWidth="150"/>
+                    <TableColumn fx:id="procBt"  text="Burst Time"   prefWidth="150"/>
+                </columns>
+            </TableView>
+            <VBox spacing="10">
+                <Button fx:id="deleteBtn" text="🗑 Delete Selected" styleClass="btn-secondary"/>
+                <Button fx:id="clearBtn"  text="✖ Clear All"       styleClass="btn-secondary"/>
+            </VBox>
+        </HBox>
+
+        <!-- QUANTUM + RUN -->
         <HBox spacing="10">
             <TextField fx:id="quantumField" promptText="Quantum (RR)" styleClass="text-field" prefWidth="130"/>
             <Button fx:id="runBtn" text="▶ Run Simulation" styleClass="btn-primary"/>
@@ -37,6 +54,8 @@
                     style="-fx-background-color: #1a1a2e; -fx-background: #1a1a2e; -fx-border-color: #2d2d4e; -fx-border-radius: 10;">
             <scheduler.sim.gui.GanttChart fx:id="rrChart"/>
         </ScrollPane>
+        <Label text="Round Robin — Ready Queue" styleClass="section-title"/>
+        <scheduler.sim.gui.ReadyQueueView fx:id="readyQueueView" prefHeight="200"/>
 
         <Label text="SRTF — Gantt Chart" styleClass="section-title"/>
         <ScrollPane fitToHeight="true"
@@ -53,7 +72,7 @@
         <HBox spacing="16">
             <VBox spacing="6" HBox.hgrow="ALWAYS">
                 <Label text="Round Robin Results" styleClass="section-title"/>
-                <TableView fx:id="rrTable" prefWidth="420" prefHeight="220" styleClass="table-view">
+                <TableView fx:id="rrTable" prefWidth="420" prefHeight="160" styleClass="table-view">
                     <columns>
                         <TableColumn fx:id="rrPid"  text="PID" prefWidth="60"/>
                         <TableColumn fx:id="rrAt"   text="AT"  prefWidth="60"/>
@@ -67,7 +86,7 @@
 
             <VBox spacing="6" HBox.hgrow="ALWAYS">
                 <Label text="SRTF Results" styleClass="section-title"/>
-                <TableView fx:id="srtfTable" prefWidth="420" prefHeight="220" styleClass="table-view">
+                <TableView fx:id="srtfTable" prefWidth="420" prefHeight="160" styleClass="table-view">
                     <columns>
                         <TableColumn fx:id="srtfPid"  text="PID" prefWidth="60"/>
                         <TableColumn fx:id="srtfAt"   text="AT"  prefWidth="60"/>
@@ -82,17 +101,29 @@
 
         <Separator/>
 
-
         <!-- COMPARISON -->
-<Label text="Comparison Summary" styleClass="section-title"/>
-<TableView fx:id="comparisonTable" prefHeight="160" styleClass="table-view">
-    <columns>
-        <TableColumn fx:id="colMetric" text="Metric"   prefWidth="180"/>
-        <TableColumn fx:id="colRR"     text="RR"       prefWidth="120"/>
-        <TableColumn fx:id="colSRTF"   text="SRTF"     prefWidth="120"/>
-        <TableColumn fx:id="colWinner" text="Winner"   prefWidth="120"/>
-    </columns>
-</TableView>
+        <Label text="Comparison Summary" styleClass="section-title"/>
+        <TableView fx:id="comparisonTable" prefHeight="130" styleClass="table-view">
+            <columns>
+                <TableColumn fx:id="colMetric" text="Metric"  prefWidth="180"/>
+                <TableColumn fx:id="colRR"     text="RR"      prefWidth="120"/>
+                <TableColumn fx:id="colSRTF"   text="SRTF"    prefWidth="120"/>
+                <TableColumn fx:id="colWinner" text="Winner"  prefWidth="120"/>
+            </columns>
+        </TableView>
+
+        <Separator/>
+
+        <!-- FINAL CONCLUSION -->
+        <Label text="Final Conclusion" styleClass="section-title"/>
+        <VBox fx:id="conclusionBox"
+              spacing="10"
+              style="-fx-background-color: #1a1a2e; -fx-padding: 16; -fx-background-radius: 10; -fx-border-color: #2d2d4e; -fx-border-radius: 10;">
+            <Label fx:id="conclusionLabel"
+                   text="Run a simulation to see the conclusion."
+                   wrapText="true"
+                   style="-fx-text-fill: #6b7280; -fx-font-size: 13px;"/>
+        </VBox>
 
     </VBox>
 </ScrollPane>

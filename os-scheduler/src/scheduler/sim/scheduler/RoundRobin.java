@@ -3,6 +3,7 @@ package scheduler.sim.scheduler;
 import scheduler.sim.model.GanttEntry;
 import scheduler.sim.model.Process;
 import scheduler.sim.model.Result;
+import scheduler.sim.model.QueueSnapshot;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -31,6 +32,7 @@ public class RoundRobin implements Scheduler {
         Queue<Process> readyQueue = new LinkedList<>();
         List<GanttEntry> ganttChart = new ArrayList<>();
         List<Process> finishedProcesses = new ArrayList<>();
+        List<QueueSnapshot> snapshots = new ArrayList<>();
 
         int currentTime = 0;
         int completedCount = 0;
@@ -86,10 +88,23 @@ public class RoundRobin implements Scheduler {
                 finishedProcesses.add(current);
                 completedCount++;
             }
+            // ── SNAPSHOT: record what is waiting after this quantum ──
+            List<String> waiting = new ArrayList<>();
+            for (Process p : readyQueue) {
+                waiting.add(p.getId());
+            }
+            snapshots.add(new QueueSnapshot(
+                    currentTime,
+                    current.getRemainingTime() > 0 ? current.getId() : "—",
+                    waiting
+            ));
+
+         
+
         }
 
         finishedProcesses.sort(Comparator.comparing(Process::getId));
-        return new Result(ganttChart, finishedProcesses);
+        return new Result(ganttChart, finishedProcesses, snapshots);
     }
 
     private List<Process> copyAndSortProcesses(List<Process> inputProcesses) {

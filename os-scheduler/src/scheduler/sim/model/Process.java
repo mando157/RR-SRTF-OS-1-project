@@ -10,8 +10,9 @@ public class Process {
     private int completionTime;
     private int waitingTime;
     private int turnaroundTime;
-    private int responseTime;
+    // private int responseTime;
 
+    private int responseTime = -1;
     public Process(String id, int arrivalTime, int burstTime) {
         this.id = id;
         this.arrivalTime = arrivalTime;
@@ -26,6 +27,7 @@ public class Process {
         this.burstTime = other.burstTime;
         this.remainingTime = other.burstTime;
         this.startTime = -1;
+        this.responseTime = -1;
     }
 
     public String getId() {

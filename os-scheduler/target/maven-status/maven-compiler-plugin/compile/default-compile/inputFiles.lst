@@ -1,10 +1,14 @@
 C:\Users\habib\OneDrive\Dokumenty\GitHub\RR-SRTF-OS-1-project\os-scheduler\src\scheduler\sim\gui\GanttChart.java
+C:\Users\habib\OneDrive\Dokumenty\GitHub\RR-SRTF-OS-1-project\os-scheduler\src\scheduler\sim\gui\GanttChartView.java
 C:\Users\habib\OneDrive\Dokumenty\GitHub\RR-SRTF-OS-1-project\os-scheduler\src\scheduler\sim\gui\MainController.java
 C:\Users\habib\OneDrive\Dokumenty\GitHub\RR-SRTF-OS-1-project\os-scheduler\src\scheduler\sim\gui\MainFX.java
 C:\Users\habib\OneDrive\Dokumenty\GitHub\RR-SRTF-OS-1-project\os-scheduler\src\scheduler\sim\Main.java
+C:\Users\habib\OneDrive\Dokumenty\GitHub\RR-SRTF-OS-1-project\os-scheduler\src\scheduler\sim\metrics\ComparisonRow.java
 C:\Users\habib\OneDrive\Dokumenty\GitHub\RR-SRTF-OS-1-project\os-scheduler\src\scheduler\sim\metrics\Metrics.java
 C:\Users\habib\OneDrive\Dokumenty\GitHub\RR-SRTF-OS-1-project\os-scheduler\src\scheduler\sim\model\GanttEntry.java
 C:\Users\habib\OneDrive\Dokumenty\GitHub\RR-SRTF-OS-1-project\os-scheduler\src\scheduler\sim\model\Process.java
+C:\Users\habib\OneDrive\Dokumenty\GitHub\RR-SRTF-OS-1-project\os-scheduler\src\scheduler\sim\model\QueueSnapshot.java
+C:\Users\habib\OneDrive\Dokumenty\GitHub\RR-SRTF-OS-1-project\os-scheduler\src\scheduler\sim\model\ReadyQueueView.java
 C:\Users\habib\OneDrive\Dokumenty\GitHub\RR-SRTF-OS-1-project\os-scheduler\src\scheduler\sim\model\Result.java
 C:\Users\habib\OneDrive\Dokumenty\GitHub\RR-SRTF-OS-1-project\os-scheduler\src\scheduler\sim\scheduler\RoundRobin.java
 C:\Users\habib\OneDrive\Dokumenty\GitHub\RR-SRTF-OS-1-project\os-scheduler\src\scheduler\sim\scheduler\Scheduler.java
