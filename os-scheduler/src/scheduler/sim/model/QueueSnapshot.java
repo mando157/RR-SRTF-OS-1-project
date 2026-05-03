@@ -7,9 +7,9 @@ import java.util.List;
  * Captured after each quantum in Round Robin.
  */
 public class QueueSnapshot {
-    private final int time;           // at what time was this snapshot taken
-    private final String running;     // process currently running
-    private final List<String> queue; // processes waiting in ready queue
+    private final int time;           
+    private final String running;     
+    private final List<String> queue; 
  
     public QueueSnapshot(int time, String running, List<String> queue) {
         this.time = time;

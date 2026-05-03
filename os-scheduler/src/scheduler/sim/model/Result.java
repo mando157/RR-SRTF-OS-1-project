@@ -7,7 +7,7 @@ import java.util.List;
 public class Result {
     private List<GanttEntry> ganttChart;
     private List<Process> finishedProcesses;
-    private List<QueueSnapshot> queueSnapshots; // NEW
+    private List<QueueSnapshot> queueSnapshots; 
  
     public Result(List<GanttEntry> ganttChart, List<Process> finishedProcesses) {
         this.ganttChart = ganttChart;

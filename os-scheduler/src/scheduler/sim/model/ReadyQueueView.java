@@ -11,15 +11,10 @@ import scheduler.sim.model.QueueSnapshot;
  
 import java.util.List;
  
-/**
- * Displays the Round Robin ready queue state after each quantum.
- *
- * Layout per step:
- *   [t=X]  [Running: P1]  →  [P2] [P3] [P4]  (waiting)
- */
+
 public class ReadyQueueView extends ScrollPane {
  
-    // Colour palette – matches GanttChart process colours
+   
     private static final String[] PROCESS_COLORS = {
         "#a855f7", "#06b6d4", "#10b981", "#f59e0b",
         "#ef4444", "#3b82f6", "#ec4899", "#84cc16"
@@ -43,7 +38,7 @@ public class ReadyQueueView extends ScrollPane {
         setPrefHeight(200);
     }
  
-    /** Called from MainController after simulation runs. */
+    
     public void draw(List<QueueSnapshot> snapshots) {
         container.getChildren().clear();
  
@@ -59,7 +54,7 @@ public class ReadyQueueView extends ScrollPane {
         }
     }
  
-    // ── one row per snapshot ────────────────────────────────────────────────
+   
  
     private HBox buildRow(QueueSnapshot snap) {
         HBox row = new HBox(8);
@@ -67,19 +62,19 @@ public class ReadyQueueView extends ScrollPane {
         row.setPadding(new Insets(4, 6, 4, 6));
         row.setStyle("-fx-background-color: #12122a; -fx-background-radius: 8;");
  
-        // Time label
+       
         Label timeLabel = new Label("t=" + snap.getTime());
         timeLabel.setPrefWidth(45);
         timeLabel.setStyle("-fx-text-fill: #6b7280; -fx-font-size: 11px; -fx-font-family: monospace;");
  
-        // Running box
+        
         StackPane runningBox = makeProcessBox(snap.getRunning(), true);
  
-        // Arrow  →
+        
         Label arrow = new Label("→");
         arrow.setStyle("-fx-text-fill: #4b5563; -fx-font-size: 14px;");
  
-        // "Queue:" label
+        
         Label qLabel = new Label("Queue:");
         qLabel.setStyle("-fx-text-fill: #6b7280; -fx-font-size: 11px;");
  
@@ -94,7 +89,7 @@ public class ReadyQueueView extends ScrollPane {
                 String pid = snap.getQueue().get(i);
                 row.getChildren().add(makeProcessBox(pid, false));
  
-                // small right-arrow between queue items
+               
                 if (i < snap.getQueue().size() - 1) {
                     Label sep = new Label("›");
                     sep.setStyle("-fx-text-fill: #4b5563; -fx-font-size: 12px;");
@@ -106,7 +101,7 @@ public class ReadyQueueView extends ScrollPane {
         return row;
     }
  
-    // ── coloured process pill ───────────────────────────────────────────────
+    
  
     private StackPane makeProcessBox(String pid, boolean isRunning) {
         Label label = new Label(pid);
@@ -139,7 +134,7 @@ public class ReadyQueueView extends ScrollPane {
         return box;
     }
  
-    /** Deterministic colour from process ID. */
+ 
     private String colorFor(String pid) {
         int hash = 0;
         for (char c : pid.toCharArray()) hash += c;
