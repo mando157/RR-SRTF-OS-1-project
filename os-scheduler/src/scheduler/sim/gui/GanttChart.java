@@ -3,6 +3,8 @@ package scheduler.sim.gui;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import scheduler.sim.model.GanttEntry;
+import javafx.geometry.Pos;
+import javafx.scene.layout.VBox;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +28,9 @@ public class GanttChart extends HBox {
     private int colorIndex = 0;
 
     public GanttChart() {
-        super(4); 
+        super(3); 
         this.getStyleClass().add("gantt-container");
+        this.setPadding(new javafx.geometry.Insets(8));
     }
 
     public void draw(List<GanttEntry> timeline) {
@@ -35,43 +38,78 @@ public class GanttChart extends HBox {
         colorMap.clear();
         colorIndex = 0;
 
+        if (timeline == null || timeline.isEmpty()) return;
+
         for (GanttEntry e : timeline) {
             int duration = e.getEndTime() - e.getStartTime();
-            int width = Math.max(40, duration * 35);
+            int width = Math.max(50, duration * 38);
 
-            Label block = new Label(e.getProcessId() + "\n" + e.getStartTime() + "→" + e.getEndTime());
-            block.setMinWidth(width);
-            block.setMaxWidth(width);
-            block.setMinHeight(50);
-            block.setAlignment(javafx.geometry.Pos.CENTER);
-            block.setWrapText(true);
+            // Label block = new Label(e.getProcessId() + "\n" + e.getStartTime() + "→" + e.getEndTime());
+            // block.setMinWidth(width);
+            // block.setMaxWidth(width);
+            // block.setMinHeight(50);
+            // block.setAlignment(javafx.geometry.Pos.CENTER);
+            // block.setWrapText(true);
+
+            Label nameLabel = new Label(e.getProcessId());
+            nameLabel.setMinWidth(width);
+            nameLabel.setMaxWidth(width);
+            nameLabel.setMinHeight(36);
+            nameLabel.setAlignment(Pos.CENTER);
+            nameLabel.setWrapText(false);
 
             if (e.getProcessId().equals("Idle")) {
-                block.setStyle(
+                nameLabel.setStyle(
                     "-fx-background-color: #374151;" +
                     "-fx-background-radius: 6;" +
                     "-fx-text-fill: #9ca3af;" +
-                    "-fx-font-size: 11px;" +
-                    "-fx-alignment: center;" +
+                    "-fx-font-size: 12px;" +
+                    // "-fx-alignment: center;" +
                     "-fx-font-style: italic;" +
-                    "-fx-padding: 4;"
+                    "-fx-padding: 4 6 4 6;"
                 );
             } else {
                 String color = getColor(e.getProcessId());
-                block.setStyle(
+                nameLabel.setStyle(
                     "-fx-background-color: " + color + ";" +
                     "-fx-background-radius: 6;" +
                     "-fx-text-fill: white;" +
                     "-fx-font-weight: bold;" +
-                    "-fx-font-size: 11px;" +
+                    "-fx-font-size: 12px;" +
                     "-fx-alignment: center;" +
-                    "-fx-padding: 4;" +
+                    "-fx-padding: 4 6 4 6;" +
                     "-fx-effect: dropshadow(gaussian, " + color + "99, 6, 0, 0, 0);"
                 );
             }
+            Label timeLabel = new Label(String.valueOf(e.getStartTime()));
+            timeLabel.setMinWidth(width);
+            timeLabel.setMaxWidth(width);
+            timeLabel.setAlignment(Pos.CENTER_LEFT);
+            timeLabel.setStyle(
+                "-fx-text-fill: #94a3b8;" +
+                "-fx-font-size: 12px;" +
+                "-fx-font-family: monospace;" +
+                "-fx-padding: 2 0 0 2;"
+            );
 
-            this.getChildren().add(block);
+            VBox cell = new VBox(2, nameLabel, timeLabel);
+            cell.setAlignment(Pos.TOP_LEFT);
+
+            this.getChildren().add(cell);
         }
+        if (!timeline.isEmpty()) {
+            GanttEntry last = timeline.get(timeline.size() - 1);
+            Label endLabel = new Label(String.valueOf(last.getEndTime()));
+            endLabel.setAlignment(Pos.CENTER_LEFT);
+            endLabel.setStyle(
+                "-fx-text-fill: #94a3b8;" +
+                "-fx-font-size: 12px;" +
+                "-fx-font-family: monospace;" +
+                "-fx-padding: 40 0 0 0;"
+            );
+            this.getChildren().add(endLabel);
+        }
+
     }
 
     private String getColor(String processId) {
@@ -82,3 +120,4 @@ public class GanttChart extends HBox {
         return colorMap.get(processId);
     }
 }
+

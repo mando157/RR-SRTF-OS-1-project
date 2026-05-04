@@ -81,6 +81,15 @@ public class MainController {
     private Label conclusionLabel;
 
     @FXML
+    private Label quantumLabel;
+    @FXML
+    private Label rrFairnessLabel;
+    @FXML
+    private Label srtfEfficiencyLabel;
+    @FXML
+    private Label fairnessVerdictLabel;
+
+    @FXML
     private TableView<ComparisonRow> comparisonTable;
     @FXML
     private TableColumn<ComparisonRow, String> colMetric;
@@ -91,18 +100,20 @@ public class MainController {
     @FXML
     private TableColumn<ComparisonRow, String> colWinner;
 
-    private final List<Process> processes = new ArrayList<>();
+    // private final List<Process> processes = new ArrayList<>();
+    private final javafx.collections.ObservableList<Process> processes =
+    FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
 
-        
         procPid.setCellValueFactory(new PropertyValueFactory<>("id"));
         procAt.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
         procBt.setCellValueFactory(new PropertyValueFactory<>("burstTime"));
-        processTable.setItems(FXCollections.observableArrayList(processes));
+        // processTable.setItems(FXCollections.observableArrayList(processes));
 
-       
+        processTable.setItems(processes);
+
         rrPid.setCellValueFactory(new PropertyValueFactory<>("id"));
         rrAt.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
         rrBt.setCellValueFactory(new PropertyValueFactory<>("burstTime"));
@@ -120,7 +131,6 @@ public class MainController {
             }
         });
 
-      
         srtfPid.setCellValueFactory(new PropertyValueFactory<>("id"));
         srtfAt.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
         srtfBt.setCellValueFactory(new PropertyValueFactory<>("burstTime"));
@@ -138,7 +148,6 @@ public class MainController {
             }
         });
 
-       
         colMetric.setCellValueFactory(new PropertyValueFactory<>("metric"));
         colRR.setCellValueFactory(new PropertyValueFactory<>("rr"));
         colSRTF.setCellValueFactory(new PropertyValueFactory<>("srtf"));
@@ -163,14 +172,12 @@ public class MainController {
             }
         });
 
-       
         addBtn.setOnAction(e -> addProcess());
         runBtn.setOnAction(e -> runSimulation());
         deleteBtn.setOnAction(e -> deleteSelected());
         clearBtn.setOnAction(e -> clearAll());
     }
 
-   
     private void addProcess() {
         try {
             String id = pidField.getText().trim();
@@ -199,7 +206,7 @@ public class MainController {
             }
 
             processes.add(new Process(id, at, bt));
-            refreshProcessTable();
+            // refreshProcessTable();
 
             pidField.clear();
             arrivalField.clear();
@@ -212,8 +219,11 @@ public class MainController {
             showError("Arrival Time and Burst Time must be valid numbers!");
         }
     }
+    private void refreshProcessTable() {
+    // ObservableList updates automatically
+     }
 
-    //
+    
     private void deleteSelected() {
         Process selected = processTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
@@ -223,7 +233,6 @@ public class MainController {
         processes.remove(selected);
         refreshProcessTable();
 
-        
         rrTable.getItems().clear();
         srtfTable.getItems().clear();
         rrChart.draw(new ArrayList<>());
@@ -234,7 +243,6 @@ public class MainController {
         conclusionLabel.setStyle("-fx-text-fill: #6b7280; -fx-font-size: 13px;");
     }
 
-    
     private void clearAll() {
         processes.clear();
         refreshProcessTable();
@@ -250,7 +258,6 @@ public class MainController {
         pidField.requestFocus();
     }
 
-   
     private void runSimulation() {
         if (processes.isEmpty()) {
             showError("Please add at least one process first!");
@@ -279,6 +286,8 @@ public class MainController {
 
             showComparison(rrResult, srtfResult);
             showConclusion(rrResult, srtfResult, q);
+            quantumLabel.setText("Time Quantum (Q) = " + q);
+            showFairnessAnalysis(rrResult, srtfResult, q);
 
         } catch (NumberFormatException e) {
             showError("Quantum must be a valid number!");
@@ -287,7 +296,6 @@ public class MainController {
         }
     }
 
-    
     private void showComparison(Result rr, Result srtf) {
         double rrWT = avg(rr.getFinishedProcesses(), Process::getWaitingTime);
         double srtfWT = avg(srtf.getFinishedProcesses(), Process::getWaitingTime);
@@ -306,7 +314,6 @@ public class MainController {
                 new ComparisonRow("Avg TAT", round(rrTAT), round(srtfTAT), wTat)));
     }
 
-    
     private void showConclusion(Result rr, Result srtf, int quantum) {
         double rrWT = avg(rr.getFinishedProcesses(), Process::getWaitingTime);
         double srtfWT = avg(srtf.getFinishedProcesses(), Process::getWaitingTime);
@@ -373,7 +380,6 @@ public class MainController {
         conclusionLabel.setStyle("-fx-text-fill: #e2e8f0; -fx-font-size: 13px;");
     }
 
-    
     @FunctionalInterface
     interface Extractor {
         int get(Process p);
@@ -387,9 +393,9 @@ public class MainController {
         return String.valueOf(Math.round(val * 100.0) / 100.0);
     }
 
-    private void refreshProcessTable() {
-        processTable.setItems(FXCollections.observableArrayList(processes));
-    }
+    // private void refreshProcessTable() {
+    //     processTable.setItems(FXCollections.observableArrayList(processes));
+    // }
 
     private List<Process> cloneList(List<Process> original) {
         List<Process> copy = new ArrayList<>();
@@ -405,4 +411,40 @@ public class MainController {
         alert.setContentText(msg);
         alert.show();
     }
+
+    private void showFairnessAnalysis(Result rr, Result srtf, int quantum) {
+    double rrRT   = avg(rr.getFinishedProcesses(),   Process::getResponseTime);
+    double srtfRT = avg(srtf.getFinishedProcesses(), Process::getResponseTime);
+    double rrWT   = avg(rr.getFinishedProcesses(),   Process::getWaitingTime);
+    double srtfWT = avg(srtf.getFinishedProcesses(), Process::getWaitingTime);
+
+    int rrMax  = rr.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).max().orElse(0);
+    int rrMin  = rr.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).min().orElse(0);
+    int srtfMax= srtf.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).max().orElse(0);
+    int srtfMin= srtf.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).min().orElse(0);
+
+    rrFairnessLabel.setText(
+        "Every process gets CPU every " + quantum + " time unit(s).\n" +
+        "WT spread: " + (rrMax - rrMin) + " (max-min)\n" +
+        "Avg Response Time: " + round(rrRT) + "\n" +
+        "No process is starved regardless of burst time."
+    );
+
+    srtfEfficiencyLabel.setText(
+        "Always runs the shortest remaining job.\n" +
+        "WT spread: " + (srtfMax - srtfMin) + " (max-min)\n" +
+        "Avg Response Time: " + round(srtfRT) + "\n" +
+        "Short jobs finish fast; long jobs may wait."
+    );
+
+    boolean rrFairer = (rrMax - rrMin) <= (srtfMax - srtfMin);
+    boolean srtfEfficient = srtfWT < rrWT;
+
+    fairnessVerdictLabel.setText(
+        "Verdict: " +
+        (rrFairer ? "Round Robin is fairer (smaller WT spread). " : "SRTF has a smaller WT spread. ") +
+        (srtfEfficient ? "SRTF is more efficient (lower avg WT)." : "Round Robin achieved competitive efficiency.")
+    );
+    fairnessVerdictLabel.setStyle("-fx-text-fill: #fbbf24; -fx-font-size: 12px; -fx-font-weight: bold;");
+}
 }
