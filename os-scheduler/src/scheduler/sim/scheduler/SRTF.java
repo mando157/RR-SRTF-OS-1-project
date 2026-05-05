@@ -37,29 +37,31 @@ public class SRTF implements Scheduler {
 
                     if (shortest == null ||
                             p.getRemainingTime() < shortest.getRemainingTime() ||
-                            (
-                                    p.getRemainingTime() == shortest.getRemainingTime()
-                                            && (
-                                            p.getArrivalTime() < shortest.getArrivalTime()
-                                                    ||
-                                                    (
-                                                            p.getArrivalTime() == shortest.getArrivalTime()
-                                                                    && p.getId().compareTo(shortest.getId()) < 0
-                                                    )
-                                    )
-                            )) {
+                            (p.getRemainingTime() == shortest.getRemainingTime()
+                                    && (p.getArrivalTime() < shortest.getArrivalTime()
+                                            ||
+                                            (p.getArrivalTime() == shortest.getArrivalTime()
+                                                    && p.getId().compareTo(shortest.getId()) < 0)))) {
                         shortest = p;
                     }
                 }
             }
 
             if (shortest == null) {
-                int idleStart = currentTime;
-                currentTime++;
+                // int idleStart = currentTime;
+                // currentTime++;
 
-                while (completedCount < n && !hasArrivedProcess(processes, currentTime)) {
-                    currentTime++;
-                }
+                // while (completedCount < n && !hasArrivedProcess(processes, currentTime)) {
+                // currentTime++;
+                // }
+                int idleStart = currentTime;
+                final int capturedTime = currentTime;
+                int nextArrival = processes.stream()
+                        .filter(p -> p.getArrivalTime() > capturedTime && p.getRemainingTime() > 0)
+                        .mapToInt(Process::getArrivalTime)
+                        .min().orElse(capturedTime + 1);
+
+                currentTime = nextArrival;
 
                 gantt.add(new GanttEntry("Idle", idleStart, currentTime));
                 continue;
@@ -71,8 +73,7 @@ public class SRTF implements Scheduler {
                     gantt.add(new GanttEntry(
                             currentProcess.getId(),
                             startTime,
-                            currentTime
-                    ));
+                            currentTime));
                 }
 
                 currentProcess = shortest;
@@ -81,14 +82,12 @@ public class SRTF implements Scheduler {
                 if (currentProcess.getStartTime() == -1) {
                     currentProcess.setStartTime(currentTime);
                     currentProcess.setResponseTime(
-                            currentTime - currentProcess.getArrivalTime()
-                    );
+                            currentTime - currentProcess.getArrivalTime());
                 }
             }
 
             currentProcess.setRemainingTime(
-                    currentProcess.getRemainingTime() - 1
-            );
+                    currentProcess.getRemainingTime() - 1);
 
             currentTime++;
 
@@ -98,19 +97,16 @@ public class SRTF implements Scheduler {
 
                 currentProcess.setTurnaroundTime(
                         currentProcess.getCompletionTime()
-                                - currentProcess.getArrivalTime()
-                );
+                                - currentProcess.getArrivalTime());
 
                 currentProcess.setWaitingTime(
                         currentProcess.getTurnaroundTime()
-                                - currentProcess.getBurstTime()
-                );
+                                - currentProcess.getBurstTime());
 
                 gantt.add(new GanttEntry(
                         currentProcess.getId(),
                         startTime,
-                        currentTime
-                ));
+                        currentTime));
 
                 completed.add(currentProcess);
                 completedCount++;

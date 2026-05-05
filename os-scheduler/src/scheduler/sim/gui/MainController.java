@@ -101,8 +101,7 @@ public class MainController {
     private TableColumn<ComparisonRow, String> colWinner;
 
     // private final List<Process> processes = new ArrayList<>();
-    private final javafx.collections.ObservableList<Process> processes =
-    FXCollections.observableArrayList();
+    private final javafx.collections.ObservableList<Process> processes = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
@@ -219,11 +218,11 @@ public class MainController {
             showError("Arrival Time and Burst Time must be valid numbers!");
         }
     }
-    private void refreshProcessTable() {
-    // ObservableList updates automatically
-     }
 
-    
+    private void refreshProcessTable() {
+        // ObservableList updates automatically
+    }
+
     private void deleteSelected() {
         Process selected = processTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
@@ -255,6 +254,11 @@ public class MainController {
         conclusionLabel.setText("Run a simulation to see the conclusion.");
         conclusionLabel.setStyle("-fx-text-fill: #6b7280; -fx-font-size: 13px;");
         quantumField.clear();
+        quantumLabel.setText("");
+        rrFairnessLabel.setText("—");
+        srtfEfficiencyLabel.setText("—");
+        fairnessVerdictLabel.setText("Run a simulation to see the analysis.");
+        fairnessVerdictLabel.setStyle("-fx-text-fill: #94a3b8; -fx-font-size: 12px;");
         pidField.requestFocus();
     }
 
@@ -304,9 +308,9 @@ public class MainController {
         double rrTAT = avg(rr.getFinishedProcesses(), Process::getTurnaroundTime);
         double srtfTAT = avg(srtf.getFinishedProcesses(), Process::getTurnaroundTime);
 
-        String wWt = rrWT <= srtfWT ? "RR" : "SRTF";
-        String wRt = rrRT <= srtfRT ? "RR" : "SRTF";
-        String wTat = rrTAT <= srtfTAT ? "RR" : "SRTF";
+        String wWt = rrWT < srtfWT ? "RR" : srtfWT < rrWT ? "SRTF" : "Equal";
+        String wRt = rrRT < srtfRT ? "RR" : srtfRT < rrRT ? "SRTF" : "Equal";
+        String wTat = rrTAT < srtfTAT ? "RR" : srtfTAT < rrTAT ? "SRTF" : "Equal";
 
         comparisonTable.setItems(FXCollections.observableArrayList(
                 new ComparisonRow("Avg Wait Time", round(rrWT), round(srtfWT), wWt),
@@ -322,9 +326,9 @@ public class MainController {
         double rrTAT = avg(rr.getFinishedProcesses(), Process::getTurnaroundTime);
         double srtfTAT = avg(srtf.getFinishedProcesses(), Process::getTurnaroundTime);
 
-        String betterWT = rrWT <= srtfWT ? "Round Robin" : "SRTF";
-        String betterRT = rrRT <= srtfRT ? "Round Robin" : "SRTF";
-        String betterTAT = rrTAT <= srtfTAT ? "Round Robin" : "SRTF";
+        String betterWT = rrWT < srtfWT ? "Round Robin" : srtfWT < rrWT ? "SRTF" : "Equal";
+        String betterRT = rrRT < srtfRT ? "Round Robin" : srtfRT < rrRT ? "SRTF" : "Equal";
+        String betterTAT = rrTAT < srtfTAT ? "Round Robin" : srtfTAT < rrTAT ? "SRTF" : "Equal";
 
         int rrMaxWT = rr.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).max().orElse(0);
         int rrMinWT = rr.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).min().orElse(0);
@@ -371,9 +375,12 @@ public class MainController {
         if (srtfWT < rrWT && srtfTAT < rrTAT) {
             sb.append("SRTF is more efficient for this workload. ")
                     .append("Round Robin is preferable when fairness across all processes is a priority.");
-        } else {
+        } else if (rrWT < srtfWT && rrTAT < srtfTAT) {
             sb.append("Round Robin performed competitively. ")
                     .append("SRTF may still be preferred for throughput-intensive environments.");
+        } else {
+            sb.append("Results are mixed. SRTF is more efficient on some metrics; ")
+                    .append("Round Robin provides fairer CPU distribution.");
         }
 
         conclusionLabel.setText(sb.toString());
@@ -394,7 +401,7 @@ public class MainController {
     }
 
     // private void refreshProcessTable() {
-    //     processTable.setItems(FXCollections.observableArrayList(processes));
+    // processTable.setItems(FXCollections.observableArrayList(processes));
     // }
 
     private List<Process> cloneList(List<Process> original) {
@@ -413,38 +420,36 @@ public class MainController {
     }
 
     private void showFairnessAnalysis(Result rr, Result srtf, int quantum) {
-    double rrRT   = avg(rr.getFinishedProcesses(),   Process::getResponseTime);
-    double srtfRT = avg(srtf.getFinishedProcesses(), Process::getResponseTime);
-    double rrWT   = avg(rr.getFinishedProcesses(),   Process::getWaitingTime);
-    double srtfWT = avg(srtf.getFinishedProcesses(), Process::getWaitingTime);
+        double rrRT = avg(rr.getFinishedProcesses(), Process::getResponseTime);
+        double srtfRT = avg(srtf.getFinishedProcesses(), Process::getResponseTime);
+        double rrWT = avg(rr.getFinishedProcesses(), Process::getWaitingTime);
+        double srtfWT = avg(srtf.getFinishedProcesses(), Process::getWaitingTime);
 
-    int rrMax  = rr.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).max().orElse(0);
-    int rrMin  = rr.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).min().orElse(0);
-    int srtfMax= srtf.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).max().orElse(0);
-    int srtfMin= srtf.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).min().orElse(0);
+        int rrMax = rr.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).max().orElse(0);
+        int rrMin = rr.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).min().orElse(0);
+        int srtfMax = srtf.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).max().orElse(0);
+        int srtfMin = srtf.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).min().orElse(0);
 
-    rrFairnessLabel.setText(
-        "Every process gets CPU every " + quantum + " time unit(s).\n" +
-        "WT spread: " + (rrMax - rrMin) + " (max-min)\n" +
-        "Avg Response Time: " + round(rrRT) + "\n" +
-        "No process is starved regardless of burst time."
-    );
+        rrFairnessLabel.setText(
+                "Every process gets CPU every " + quantum + " time unit(s).\n" +
+                        "WT spread: " + (rrMax - rrMin) + " (max-min)\n" +
+                        "Avg Response Time: " + round(rrRT) + "\n" +
+                        "No process is starved regardless of burst time.");
 
-    srtfEfficiencyLabel.setText(
-        "Always runs the shortest remaining job.\n" +
-        "WT spread: " + (srtfMax - srtfMin) + " (max-min)\n" +
-        "Avg Response Time: " + round(srtfRT) + "\n" +
-        "Short jobs finish fast; long jobs may wait."
-    );
+        srtfEfficiencyLabel.setText(
+                "Always runs the shortest remaining job.\n" +
+                        "WT spread: " + (srtfMax - srtfMin) + " (max-min)\n" +
+                        "Avg Response Time: " + round(srtfRT) + "\n" +
+                        "Short jobs finish fast; long jobs may wait.");
 
-    boolean rrFairer = (rrMax - rrMin) <= (srtfMax - srtfMin);
-    boolean srtfEfficient = srtfWT < rrWT;
+        boolean rrFairer = (rrMax - rrMin) <= (srtfMax - srtfMin);
+        boolean srtfEfficient = srtfWT < rrWT;
 
-    fairnessVerdictLabel.setText(
-        "Verdict: " +
-        (rrFairer ? "Round Robin is fairer (smaller WT spread). " : "SRTF has a smaller WT spread. ") +
-        (srtfEfficient ? "SRTF is more efficient (lower avg WT)." : "Round Robin achieved competitive efficiency.")
-    );
-    fairnessVerdictLabel.setStyle("-fx-text-fill: #fbbf24; -fx-font-size: 12px; -fx-font-weight: bold;");
-}
+        fairnessVerdictLabel.setText(
+                "Verdict: " +
+                        (rrFairer ? "Round Robin is fairer (smaller WT spread). " : "SRTF has a smaller WT spread. ") +
+                        (srtfEfficient ? "SRTF is more efficient (lower avg WT)."
+                                : "Round Robin achieved competitive efficiency."));
+        fairnessVerdictLabel.setStyle("-fx-text-fill: #fbbf24; -fx-font-size: 12px; -fx-font-weight: bold;");
+    }
 }
