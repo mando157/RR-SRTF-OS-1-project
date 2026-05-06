@@ -21,12 +21,37 @@
             <Button fx:id="addBtn" text="＋ Add Process" styleClass="btn-secondary"/>
         </HBox>
 
+        <!-- PRESET SCENARIOS -->
+        <Label text="Load Test Scenario" styleClass="section-title"/>
+        <HBox spacing="8">
+            <Button fx:id="scenarioABtn" text="Scenario A — Mixed"
+                    style="-fx-background-color: #1e3a5f; -fx-text-fill: #93c5fd;
+                           -fx-font-weight: bold; -fx-font-size: 11px;
+                           -fx-padding: 6 12 6 12; -fx-background-radius: 8;
+                           -fx-cursor: hand;"/>
+            <Button fx:id="scenarioBBtn" text="Scenario B — Quantum"
+                    style="-fx-background-color: #1e3a5f; -fx-text-fill: #93c5fd;
+                           -fx-font-weight: bold; -fx-font-size: 11px;
+                           -fx-padding: 6 12 6 12; -fx-background-radius: 8;
+                           -fx-cursor: hand;"/>
+            <Button fx:id="scenarioCBtn" text="Scenario C — Short Jobs"
+                    style="-fx-background-color: #1e3a5f; -fx-text-fill: #93c5fd;
+                           -fx-font-weight: bold; -fx-font-size: 11px;
+                           -fx-padding: 6 12 6 12; -fx-background-radius: 8;
+                           -fx-cursor: hand;"/>
+            <Button fx:id="scenarioDBtn" text="Scenario D — Fairness"
+                    style="-fx-background-color: #1e3a5f; -fx-text-fill: #93c5fd;
+                           -fx-font-weight: bold; -fx-font-size: 11px;
+                           -fx-padding: 6 12 6 12; -fx-background-radius: 8;
+                           -fx-cursor: hand;"/>
+        </HBox>
+
         <!-- PROCESS LIST -->
         <Label text="Added Processes" styleClass="section-title"/>
         <HBox spacing="10">
             <TableView fx:id="processTable" prefHeight="150" prefWidth="500" styleClass="table-view">
                 <columns>
-                    <TableColumn fx:id="procPid" text="PID" prefWidth="100"/>
+                    <TableColumn fx:id="procPid" text="PID"          prefWidth="100"/>
                     <TableColumn fx:id="procAt"  text="Arrival Time" prefWidth="150"/>
                     <TableColumn fx:id="procBt"  text="Burst Time"   prefWidth="150"/>
                 </columns>
@@ -52,22 +77,19 @@
 
         <!-- GANTT -->
         <Label text="Round Robin — Gantt Chart" styleClass="section-title"/>
-        <ScrollPane fitToHeight="true"
-                    hbarPolicy="AS_NEEDED"
-                    vbarPolicy="NEVER"
-                    prefHeight="80"
-                    style="-fx-background-color: #1a1a2e; -fx-background: #1a1a2e; -fx-border-color: #2d2d4e; -fx-border-radius: 10;">
+        <ScrollPane fitToHeight="true" hbarPolicy="AS_NEEDED" vbarPolicy="NEVER" prefHeight="80"
+                    style="-fx-background-color: #1a1a2e; -fx-background: #1a1a2e;
+                           -fx-border-color: #2d2d4e; -fx-border-radius: 10;">
             <scheduler.sim.gui.GanttChart fx:id="rrChart"/>
         </ScrollPane>
+
         <Label text="Round Robin — Ready Queue" styleClass="section-title"/>
         <scheduler.sim.gui.ReadyQueueView fx:id="readyQueueView" prefHeight="200"/>
 
         <Label text="SRTF — Gantt Chart" styleClass="section-title"/>
-        <ScrollPane fitToHeight="true"
-                    hbarPolicy="AS_NEEDED"
-                    vbarPolicy="NEVER"
-                    prefHeight="80"
-                    style="-fx-background-color: #1a1a2e; -fx-background: #1a1a2e; -fx-border-color: #2d2d4e; -fx-border-radius: 10;">
+        <ScrollPane fitToHeight="true" hbarPolicy="AS_NEEDED" vbarPolicy="NEVER" prefHeight="80"
+                    style="-fx-background-color: #1a1a2e; -fx-background: #1a1a2e;
+                           -fx-border-color: #2d2d4e; -fx-border-radius: 10;">
             <scheduler.sim.gui.GanttChart fx:id="srtfChart"/>
         </ScrollPane>
 
@@ -88,7 +110,6 @@
                     </columns>
                 </TableView>
             </VBox>
-
             <VBox spacing="6" HBox.hgrow="ALWAYS">
                 <Label text="SRTF Results" styleClass="section-title"/>
                 <TableView fx:id="srtfTable" prefWidth="420" prefHeight="160" styleClass="table-view">
@@ -119,7 +140,7 @@
 
         <Separator/>
 
-         <!-- FAIRNESS vs EFFICIENCY -->
+        <!-- FAIRNESS vs EFFICIENCY -->
         <Label text="Fairness vs Efficiency Analysis" styleClass="section-title"/>
         <VBox spacing="8"
               style="-fx-background-color: #1a1a2e; -fx-padding: 16;
@@ -129,18 +150,14 @@
                       style="-fx-background-color: #2d1b69; -fx-padding: 12; -fx-background-radius: 8;">
                     <Label text=" Round Robin — Fairness"
                            style="-fx-text-fill: #a855f7; -fx-font-weight: bold; -fx-font-size: 13px;"/>
-                    <Label fx:id="rrFairnessLabel"
-                           text="—"
-                           wrapText="true"
+                    <Label fx:id="rrFairnessLabel" text="—" wrapText="true"
                            style="-fx-text-fill: #e2e8f0; -fx-font-size: 12px;"/>
                 </VBox>
                 <VBox spacing="6" HBox.hgrow="ALWAYS"
                       style="-fx-background-color: #064e3b; -fx-padding: 12; -fx-background-radius: 8;">
                     <Label text=" SRTF — Efficiency"
                            style="-fx-text-fill: #10b981; -fx-font-weight: bold; -fx-font-size: 13px;"/>
-                    <Label fx:id="srtfEfficiencyLabel"
-                           text="—"
-                           wrapText="true"
+                    <Label fx:id="srtfEfficiencyLabel" text="—" wrapText="true"
                            style="-fx-text-fill: #e2e8f0; -fx-font-size: 12px;"/>
                 </VBox>
             </HBox>
@@ -148,11 +165,10 @@
                    text="Run a simulation to see the analysis."
                    wrapText="true"
                    style="-fx-text-fill: #94a3b8; -fx-font-size: 12px; -fx-padding: 4 0 0 0;"/>
-         </VBox>
+        </VBox>
 
         <Separator/>
 
-        
         <!-- FINAL CONCLUSION -->
         <Label text="Final Conclusion" styleClass="section-title"/>
         <VBox spacing="10"
@@ -166,3 +182,4 @@
 
     </VBox>
 </ScrollPane>
+
