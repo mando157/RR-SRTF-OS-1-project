@@ -16,9 +16,15 @@ public class ReadyQueueView extends ScrollPane {
  
    
     private static final String[] PROCESS_COLORS = {
-        "#a855f7", "#06b6d4", "#10b981", "#f59e0b",
-        "#ef4444", "#3b82f6", "#ec4899", "#84cc16"
-    };
+    "#818cf8",
+    "#38bdf8",
+    "#34d399",
+    "#fbbf24",
+    "#f87171",
+    "#f472b6",
+    "#22d3ee",
+    "#a3e635"
+};
     private static final String IDLE_COLOR   = "#4b5563";
     private static final String DONE_COLOR   = "#374151";
  
@@ -27,14 +33,14 @@ public class ReadyQueueView extends ScrollPane {
     public ReadyQueueView() {
         container = new VBox(8);
         container.setPadding(new Insets(10));
-        container.setStyle("-fx-background-color: #1a1a2e;");
+        container.setStyle("-fx-background-color:  #f8fafc;");
  
         setContent(container);
         setFitToWidth(true);
         setHbarPolicy(ScrollBarPolicy.NEVER);
         setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
-        setStyle("-fx-background-color: #1a1a2e; -fx-background: #1a1a2e; " +
-                 "-fx-border-color: #2d2d4e; -fx-border-radius: 10;");
+        setStyle("-fx-background-color: #f8fafc; -fx-background: #f8fafc; " +
+         "-fx-border-color: #94a3b8; -fx-border-radius: 10;");
         setPrefHeight(200);
     }
  
@@ -44,7 +50,7 @@ public class ReadyQueueView extends ScrollPane {
  
         if (snapshots == null || snapshots.isEmpty()) {
             Label empty = new Label("No data");
-            empty.setStyle("-fx-text-fill: #6b7280;");
+            empty.setStyle("-fx-text-fill:  #64748b;");
             container.getChildren().add(empty);
             return;
         }
@@ -60,12 +66,12 @@ public class ReadyQueueView extends ScrollPane {
         HBox row = new HBox(8);
         row.setAlignment(Pos.CENTER_LEFT);
         row.setPadding(new Insets(4, 6, 4, 6));
-        row.setStyle("-fx-background-color: #12122a; -fx-background-radius: 8;");
+        row.setStyle("-fx-background-color: #f8fafc; -fx-background-radius: 8;");
  
        
         Label timeLabel = new Label("t=" + snap.getTime());
         timeLabel.setPrefWidth(45);
-        timeLabel.setStyle("-fx-text-fill: #6b7280; -fx-font-size: 11px; -fx-font-family: monospace;");
+        timeLabel.setStyle("-fx-text-fill: #64748b; -fx-font-size: 11px; -fx-font-family: monospace;");
  
         
         StackPane runningBox = makeProcessBox(snap.getRunning(), true);
@@ -106,7 +112,7 @@ public class ReadyQueueView extends ScrollPane {
     private StackPane makeProcessBox(String pid, boolean isRunning) {
         Label label = new Label(pid);
         label.setStyle(
-            "-fx-text-fill: white;" +
+            "-fx-text-fill: #1e1b4b;" +
             "-fx-font-weight: bold;" +
             "-fx-font-size: 11px;"
         );

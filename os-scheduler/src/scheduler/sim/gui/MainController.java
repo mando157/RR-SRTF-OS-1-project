@@ -125,19 +125,19 @@ public class MainController {
         deleteBtn.setOnAction(e -> deleteSelected());
         clearBtn.setOnAction(e -> clearAll());
 
-        // ── Scenario Buttons ──
+        
         scenarioABtn.setOnAction(e -> loadScenario("A"));
         scenarioBBtn.setOnAction(e -> loadScenario("B"));
         scenarioCBtn.setOnAction(e -> loadScenario("C"));
         scenarioDBtn.setOnAction(e -> loadScenario("D"));
     }
 
-    // ── Load preset scenarios ──
+   
     private void loadScenario(String scenario) {
         clearAll();
         switch (scenario) {
             case "A" -> {
-                // Basic Mixed Workload
+                
                 processes.add(new Process("P1", 0, 8));
                 processes.add(new Process("P2", 1, 4));
                 processes.add(new Process("P3", 2, 9));
@@ -145,7 +145,7 @@ public class MainController {
                 quantumField.setText("3");
             }
             case "B" -> {
-                // Quantum Sensitivity
+               
                 processes.add(new Process("P1", 0, 6));
                 processes.add(new Process("P2", 0, 6));
                 processes.add(new Process("P3", 0, 6));
@@ -214,7 +214,7 @@ public class MainController {
         readyQueueView.draw(new ArrayList<>());
         comparisonTable.getItems().clear();
         conclusionLabel.setText("Run a simulation to see the conclusion.");
-        conclusionLabel.setStyle("-fx-text-fill: #6b7280; -fx-font-size: 13px;");
+        conclusionLabel.setStyle("-fx-text-fill: #0f172a; -fx-font-size: 13px;");
     }
 
     private void clearAll() {
@@ -226,13 +226,13 @@ public class MainController {
         readyQueueView.draw(new ArrayList<>());
         comparisonTable.getItems().clear();
         conclusionLabel.setText("Run a simulation to see the conclusion.");
-        conclusionLabel.setStyle("-fx-text-fill: #6b7280; -fx-font-size: 13px;");
+        conclusionLabel.setStyle("-fx-text-fill: #0f172a; -fx-font-size: 13px;");
         quantumField.clear();
         quantumLabel.setText("");
         rrFairnessLabel.setText("—");
         srtfEfficiencyLabel.setText("—");
         fairnessVerdictLabel.setText("Run a simulation to see the analysis.");
-        fairnessVerdictLabel.setStyle("-fx-text-fill: #94a3b8; -fx-font-size: 12px;");
+        fairnessVerdictLabel.setStyle("-fx-text-fill: #92400e; -fx-font-size: 12px;");
         pidField.requestFocus();
     }
 
@@ -339,7 +339,7 @@ public class MainController {
         }
 
         conclusionLabel.setText(sb.toString());
-        conclusionLabel.setStyle("-fx-text-fill: #e2e8f0; -fx-font-size: 13px;");
+        conclusionLabel.setStyle("-fx-text-fill: #0f172a; -fx-font-size: 13px;");
     }
 
     @FunctionalInterface
@@ -397,6 +397,6 @@ public class MainController {
                 "Verdict: " +
                 (rrFairer ? "Round Robin is fairer (smaller WT spread). " : "SRTF has a smaller WT spread. ") +
                 (srtfEfficient ? "SRTF is more efficient (lower avg WT)." : "Round Robin achieved competitive efficiency."));
-        fairnessVerdictLabel.setStyle("-fx-text-fill: #fbbf24; -fx-font-size: 12px; -fx-font-weight: bold;");
+        fairnessVerdictLabel.setStyle("-fx-text-fill: #92400e; -fx-font-size: 12px; -fx-font-weight: bold;");
     }
 }

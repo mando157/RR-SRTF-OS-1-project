@@ -14,15 +14,15 @@ public class GanttChart extends HBox {
 
 
     private static final String[] COLORS = {
-        "#7c3aed", 
-        "#0ea5e9", 
-        "#10b981", 
-        "#f59e0b", 
-        "#ef4444", 
-        "#ec4899", 
-        "#06b6d4", 
-        "#84cc16"  
-    };
+    "#818cf8",  
+    "#38bdf8",  
+    "#34d399", 
+    "#fbbf24",  
+    "#f87171",  
+    "#f472b6",  
+    "#22d3ee",  
+    "#a3e635" 
+};
 
     private final Map<String, String> colorMap = new HashMap<>();
     private int colorIndex = 0;
@@ -62,7 +62,7 @@ public class GanttChart extends HBox {
                 nameLabel.setStyle(
                     "-fx-background-color: #374151;" +
                     "-fx-background-radius: 6;" +
-                    "-fx-text-fill: #9ca3af;" +
+                   "-fx-text-fill: #0f172a;" +
                     "-fx-font-size: 12px;" +
                     // "-fx-alignment: center;" +
                     "-fx-font-style: italic;" +
@@ -73,7 +73,7 @@ public class GanttChart extends HBox {
                 nameLabel.setStyle(
                     "-fx-background-color: " + color + ";" +
                     "-fx-background-radius: 6;" +
-                    "-fx-text-fill: white;" +
+                    "-fx-text-fill: #0f172a;"  +
                     "-fx-font-weight: bold;" +
                     "-fx-font-size: 12px;" +
                     "-fx-alignment: center;" +
@@ -86,7 +86,7 @@ public class GanttChart extends HBox {
             timeLabel.setMaxWidth(width);
             timeLabel.setAlignment(Pos.CENTER_LEFT);
             timeLabel.setStyle(
-                "-fx-text-fill: #94a3b8;" +
+               "-fx-text-fill: #0f172a;"+
                 "-fx-font-size: 12px;" +
                 "-fx-font-family: monospace;" +
                 "-fx-padding: 2 0 0 2;"
@@ -102,7 +102,7 @@ public class GanttChart extends HBox {
             Label endLabel = new Label(String.valueOf(last.getEndTime()));
             endLabel.setAlignment(Pos.CENTER_LEFT);
             endLabel.setStyle(
-                "-fx-text-fill: #94a3b8;" +
+                "-fx-text-fill: #0f172a;" +
                 "-fx-font-size: 12px;" +
                 "-fx-font-family: monospace;" +
                 "-fx-padding: 40 0 0 0;"

@@ -7,11 +7,11 @@
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="scheduler.sim.gui.MainController"
             fitToWidth="true"
-            style="-fx-background-color: #0f0f1a; -fx-background: #0f0f1a;">
+            style="-fx-background-color: #ffffff; -fx-background: #ffffff;">
 
     <VBox styleClass="main-container"
           spacing="16"
-          style="-fx-background-color: #0f0f1a; -fx-padding: 20;">
+          style="-fx-background-color: #ffffff; -fx-padding: 20;">
 
         <!-- INPUT -->
         <HBox spacing="10">
@@ -25,24 +25,28 @@
         <Label text="Load Test Scenario" styleClass="section-title"/>
         <HBox spacing="8">
             <Button fx:id="scenarioABtn" text="Scenario A — Mixed"
-                    style="-fx-background-color: #1e3a5f; -fx-text-fill: #93c5fd;
+                    style="-fx-background-color: #ffedd5; -fx-text-fill: #c2410c;
                            -fx-font-weight: bold; -fx-font-size: 11px;
                            -fx-padding: 6 12 6 12; -fx-background-radius: 8;
+                           -fx-border-color: #ea580c; -fx-border-radius: 8;
                            -fx-cursor: hand;"/>
             <Button fx:id="scenarioBBtn" text="Scenario B — Quantum"
-                    style="-fx-background-color: #1e3a5f; -fx-text-fill: #93c5fd;
+                    style="-fx-background-color: #ffedd5; -fx-text-fill: #c2410c;
                            -fx-font-weight: bold; -fx-font-size: 11px;
                            -fx-padding: 6 12 6 12; -fx-background-radius: 8;
+                           -fx-border-color: #ea580c; -fx-border-radius: 8;
                            -fx-cursor: hand;"/>
             <Button fx:id="scenarioCBtn" text="Scenario C — Short Jobs"
-                    style="-fx-background-color: #1e3a5f; -fx-text-fill: #93c5fd;
+                    style="-fx-background-color: #ffedd5; -fx-text-fill: #c2410c;
                            -fx-font-weight: bold; -fx-font-size: 11px;
                            -fx-padding: 6 12 6 12; -fx-background-radius: 8;
+                           -fx-border-color: #ea580c; -fx-border-radius: 8;
                            -fx-cursor: hand;"/>
             <Button fx:id="scenarioDBtn" text="Scenario D — Fairness"
-                    style="-fx-background-color: #1e3a5f; -fx-text-fill: #93c5fd;
+                    style="-fx-background-color: #ffedd5; -fx-text-fill: #c2410c;
                            -fx-font-weight: bold; -fx-font-size: 11px;
                            -fx-padding: 6 12 6 12; -fx-background-radius: 8;
+                           -fx-border-color: #ea580c; -fx-border-radius: 8;
                            -fx-cursor: hand;"/>
         </HBox>
 
@@ -68,28 +72,31 @@
             <Button fx:id="runBtn" text="▶ Run Simulation" styleClass="btn-primary"/>
             <Label fx:id="quantumLabel"
                    text=""
-                   style="-fx-background-color: #312e81; -fx-text-fill: #a5b4fc;
+                   style="-fx-background-color: #ffedd5; -fx-text-fill: #c2410c;
                           -fx-font-size: 13px; -fx-font-weight: bold;
-                          -fx-padding: 6 14 6 14; -fx-background-radius: 8;"/>
+                          -fx-padding: 6 14 6 14; -fx-background-radius: 8;
+                          -fx-border-color: #ea580c; -fx-border-radius: 8;"/>
         </HBox>
 
         <Separator/>
 
-        <!-- GANTT -->
+        <!-- GANTT RR -->
         <Label text="Round Robin — Gantt Chart" styleClass="section-title"/>
-        <ScrollPane fitToHeight="true" hbarPolicy="AS_NEEDED" vbarPolicy="NEVER" prefHeight="80"
-                    style="-fx-background-color: #1a1a2e; -fx-background: #1a1a2e;
-                           -fx-border-color: #2d2d4e; -fx-border-radius: 10;">
+        <ScrollPane fitToHeight="true" hbarPolicy="AS_NEEDED" vbarPolicy="NEVER" prefHeight="90"
+                    style="-fx-background-color: #f8fafc; -fx-background: #f8fafc;
+                           -fx-border-color: #94a3b8; -fx-border-radius: 10;">
             <scheduler.sim.gui.GanttChart fx:id="rrChart"/>
         </ScrollPane>
 
+        <!-- READY QUEUE -->
         <Label text="Round Robin — Ready Queue" styleClass="section-title"/>
         <scheduler.sim.gui.ReadyQueueView fx:id="readyQueueView" prefHeight="200"/>
 
+        <!-- GANTT SRTF -->
         <Label text="SRTF — Gantt Chart" styleClass="section-title"/>
-        <ScrollPane fitToHeight="true" hbarPolicy="AS_NEEDED" vbarPolicy="NEVER" prefHeight="80"
-                    style="-fx-background-color: #1a1a2e; -fx-background: #1a1a2e;
-                           -fx-border-color: #2d2d4e; -fx-border-radius: 10;">
+        <ScrollPane fitToHeight="true" hbarPolicy="AS_NEEDED" vbarPolicy="NEVER" prefHeight="90"
+                    style="-fx-background-color: #f8fafc; -fx-background: #f8fafc;
+                           -fx-border-color: #94a3b8; -fx-border-radius: 10;">
             <scheduler.sim.gui.GanttChart fx:id="srtfChart"/>
         </ScrollPane>
 
@@ -143,28 +150,31 @@
         <!-- FAIRNESS vs EFFICIENCY -->
         <Label text="Fairness vs Efficiency Analysis" styleClass="section-title"/>
         <VBox spacing="8"
-              style="-fx-background-color: #1a1a2e; -fx-padding: 16;
-                     -fx-background-radius: 10; -fx-border-color: #2d2d4e; -fx-border-radius: 10;">
+              style="-fx-background-color: #f1f5f9; -fx-padding: 16;
+                     -fx-background-radius: 10; -fx-border-color: #94a3b8; -fx-border-radius: 10;">
             <HBox spacing="16">
                 <VBox spacing="6" HBox.hgrow="ALWAYS"
-                      style="-fx-background-color: #2d1b69; -fx-padding: 12; -fx-background-radius: 8;">
+                      style="-fx-background-color: #ffedd5; -fx-padding: 12;
+                             -fx-background-radius: 8; -fx-border-color: #ea580c; -fx-border-radius: 8;">
                     <Label text=" Round Robin — Fairness"
-                           style="-fx-text-fill: #a855f7; -fx-font-weight: bold; -fx-font-size: 13px;"/>
+                           style="-fx-text-fill: #c2410c; -fx-font-weight: bold; -fx-font-size: 13px;"/>
                     <Label fx:id="rrFairnessLabel" text="—" wrapText="true"
-                           style="-fx-text-fill: #e2e8f0; -fx-font-size: 12px;"/>
+                           style="-fx-text-fill: #0f172a; -fx-font-size: 12px;"/>
                 </VBox>
                 <VBox spacing="6" HBox.hgrow="ALWAYS"
-                      style="-fx-background-color: #064e3b; -fx-padding: 12; -fx-background-radius: 8;">
+                      style="-fx-background-color: #dcfce7; -fx-padding: 12;
+                             -fx-background-radius: 8; -fx-border-color: #16a34a; -fx-border-radius: 8;">
                     <Label text=" SRTF — Efficiency"
-                           style="-fx-text-fill: #10b981; -fx-font-weight: bold; -fx-font-size: 13px;"/>
+                           style="-fx-text-fill: #15803d; -fx-font-weight: bold; -fx-font-size: 13px;"/>
                     <Label fx:id="srtfEfficiencyLabel" text="—" wrapText="true"
-                           style="-fx-text-fill: #e2e8f0; -fx-font-size: 12px;"/>
+                           style="-fx-text-fill: #0f172a; -fx-font-size: 12px;"/>
                 </VBox>
             </HBox>
             <Label fx:id="fairnessVerdictLabel"
                    text="Run a simulation to see the analysis."
                    wrapText="true"
-                   style="-fx-text-fill: #94a3b8; -fx-font-size: 12px; -fx-padding: 4 0 0 0;"/>
+                   style="-fx-text-fill: #92400e; -fx-font-size: 12px;
+                          -fx-font-weight: bold; -fx-padding: 4 0 0 0;"/>
         </VBox>
 
         <Separator/>
@@ -172,14 +182,13 @@
         <!-- FINAL CONCLUSION -->
         <Label text="Final Conclusion" styleClass="section-title"/>
         <VBox spacing="10"
-              style="-fx-background-color: #1a1a2e; -fx-padding: 16;
-                     -fx-background-radius: 10; -fx-border-color: #2d2d4e; -fx-border-radius: 10;">
+              style="-fx-background-color: #f1f5f9; -fx-padding: 16;
+                     -fx-background-radius: 10; -fx-border-color: #94a3b8; -fx-border-radius: 10;">
             <Label fx:id="conclusionLabel"
                    text="Run a simulation to see the conclusion."
                    wrapText="true"
-                   style="-fx-text-fill: #6b7280; -fx-font-size: 13px;"/>
+                   style="-fx-text-fill: #475569; -fx-font-size: 13px;"/>
         </VBox>
 
     </VBox>
 </ScrollPane>
-
