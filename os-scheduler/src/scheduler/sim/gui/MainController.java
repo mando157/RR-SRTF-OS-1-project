@@ -15,59 +15,105 @@ import java.util.List;
 
 public class MainController {
 
-    @FXML private TextField pidField;
-    @FXML private TextField arrivalField;
-    @FXML private TextField burstField;
-    @FXML private TextField quantumField;
-    @FXML private Button addBtn;
-    @FXML private Button runBtn;
-    @FXML private Button deleteBtn;
-    @FXML private Button clearBtn;
+    @FXML
+    private TextField pidField;
+    @FXML
+    private TextField arrivalField;
+    @FXML
+    private TextField burstField;
+    @FXML
+    private TextField quantumField;
+    @FXML
+    private Button addBtn;
+    @FXML
+    private Button runBtn;
+    @FXML
+    private Button deleteBtn;
+    @FXML
+    private Button clearBtn;
 
     // ── Scenario Buttons ──
-    @FXML private Button scenarioABtn;
-    @FXML private Button scenarioBBtn;
-    @FXML private Button scenarioCBtn;
-    @FXML private Button scenarioDBtn;
+    @FXML
+    private Button scenarioABtn;
+    @FXML
+    private Button scenarioB1Btn;
+    @FXML
+    private Button scenarioB2Btn;
+    @FXML
+    private Button scenarioCBtn;
+    @FXML
+    private Button scenarioDBtn;
+    @FXML
+    private Button scenarioEBtn;
 
-    @FXML private TableView<Process> processTable;
-    @FXML private TableColumn<Process, String>  procPid;
-    @FXML private TableColumn<Process, Integer> procAt;
-    @FXML private TableColumn<Process, Integer> procBt;
+    @FXML
+    private TableView<Process> processTable;
+    @FXML
+    private TableColumn<Process, String> procPid;
+    @FXML
+    private TableColumn<Process, Integer> procAt;
+    @FXML
+    private TableColumn<Process, Integer> procBt;
 
-    @FXML private TableView<Process> rrTable;
-    @FXML private TableColumn<Process, String>  rrPid;
-    @FXML private TableColumn<Process, Integer> rrAt;
-    @FXML private TableColumn<Process, Integer> rrBt;
-    @FXML private TableColumn<Process, Integer> rrWt;
-    @FXML private TableColumn<Process, Integer> rrTat;
-    @FXML private TableColumn<Process, Integer> rrRt;
+    @FXML
+    private TableView<Process> rrTable;
+    @FXML
+    private TableColumn<Process, String> rrPid;
+    @FXML
+    private TableColumn<Process, Integer> rrAt;
+    @FXML
+    private TableColumn<Process, Integer> rrBt;
+    @FXML
+    private TableColumn<Process, Integer> rrWt;
+    @FXML
+    private TableColumn<Process, Integer> rrTat;
+    @FXML
+    private TableColumn<Process, Integer> rrRt;
 
-    @FXML private TableView<Process> srtfTable;
-    @FXML private TableColumn<Process, String>  srtfPid;
-    @FXML private TableColumn<Process, Integer> srtfAt;
-    @FXML private TableColumn<Process, Integer> srtfBt;
-    @FXML private TableColumn<Process, Integer> srtfWt;
-    @FXML private TableColumn<Process, Integer> srtfTat;
-    @FXML private TableColumn<Process, Integer> srtfRt;
+    @FXML
+    private TableView<Process> srtfTable;
+    @FXML
+    private TableColumn<Process, String> srtfPid;
+    @FXML
+    private TableColumn<Process, Integer> srtfAt;
+    @FXML
+    private TableColumn<Process, Integer> srtfBt;
+    @FXML
+    private TableColumn<Process, Integer> srtfWt;
+    @FXML
+    private TableColumn<Process, Integer> srtfTat;
+    @FXML
+    private TableColumn<Process, Integer> srtfRt;
 
-    @FXML private GanttChart rrChart;
-    @FXML private GanttChart srtfChart;
-    @FXML private ReadyQueueView readyQueueView;
-    @FXML private Label conclusionLabel;
-    @FXML private Label quantumLabel;
-    @FXML private Label rrFairnessLabel;
-    @FXML private Label srtfEfficiencyLabel;
-    @FXML private Label fairnessVerdictLabel;
+    @FXML
+    private GanttChart rrChart;
+    @FXML
+    private GanttChart srtfChart;
+    @FXML
+    private ReadyQueueView readyQueueView;
+    @FXML
+    private Label conclusionLabel;
+    @FXML
+    private Label quantumLabel;
+    @FXML
+    private Label rrFairnessLabel;
+    @FXML
+    private Label srtfEfficiencyLabel;
+    @FXML
+    private Label fairnessVerdictLabel;
 
-    @FXML private TableView<ComparisonRow> comparisonTable;
-    @FXML private TableColumn<ComparisonRow, String> colMetric;
-    @FXML private TableColumn<ComparisonRow, String> colRR;
-    @FXML private TableColumn<ComparisonRow, String> colSRTF;
-    @FXML private TableColumn<ComparisonRow, String> colWinner;
+    @FXML
+    private TableView<ComparisonRow> comparisonTable;
+    @FXML
+    private TableColumn<ComparisonRow, String> colMetric;
+    @FXML
+    private TableColumn<ComparisonRow, String> colRR;
+    @FXML
+    private TableColumn<ComparisonRow, String> colSRTF;
+    @FXML
+    private TableColumn<ComparisonRow, String> colWinner;
 
-    private final javafx.collections.ObservableList<Process> processes =
-            FXCollections.observableArrayList();
+    private final javafx.collections.ObservableList<Process> processes = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
@@ -84,7 +130,8 @@ public class MainController {
         rrTat.setCellValueFactory(new PropertyValueFactory<>("turnaroundTime"));
         rrRt.setCellValueFactory(new PropertyValueFactory<>("responseTime"));
         rrRt.setCellFactory(col -> new TableCell<>() {
-            @Override protected void updateItem(Integer item, boolean empty) {
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
                 super.updateItem(item, empty);
                 setText(empty || item == null ? "—" : String.valueOf(item));
             }
@@ -97,7 +144,8 @@ public class MainController {
         srtfTat.setCellValueFactory(new PropertyValueFactory<>("turnaroundTime"));
         srtfRt.setCellValueFactory(new PropertyValueFactory<>("responseTime"));
         srtfRt.setCellFactory(col -> new TableCell<>() {
-            @Override protected void updateItem(Integer item, boolean empty) {
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
                 super.updateItem(item, empty);
                 setText(empty || item == null ? "—" : String.valueOf(item));
             }
@@ -108,14 +156,20 @@ public class MainController {
         colSRTF.setCellValueFactory(new PropertyValueFactory<>("srtf"));
         colWinner.setCellValueFactory(new PropertyValueFactory<>("winner"));
         colWinner.setCellFactory(col -> new TableCell<>() {
-            @Override protected void updateItem(String item, boolean empty) {
+            @Override
+            protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item == null) { setText(null); setStyle(""); }
-                else {
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
                     setText(item);
-                    if      (item.equals("RR"))   setStyle("-fx-text-fill: #a855f7; -fx-font-weight: bold;");
-                    else if (item.equals("SRTF")) setStyle("-fx-text-fill: #10b981; -fx-font-weight: bold;");
-                    else                          setStyle("-fx-text-fill: #f59e0b; -fx-font-weight: bold;");
+                    if (item.equals("RR"))
+                        setStyle("-fx-text-fill: #a855f7; -fx-font-weight: bold;");
+                    else if (item.equals("SRTF"))
+                        setStyle("-fx-text-fill: #10b981; -fx-font-weight: bold;");
+                    else
+                        setStyle("-fx-text-fill: #f59e0b; -fx-font-weight: bold;");
                 }
             }
         });
@@ -125,32 +179,39 @@ public class MainController {
         deleteBtn.setOnAction(e -> deleteSelected());
         clearBtn.setOnAction(e -> clearAll());
 
-        
         scenarioABtn.setOnAction(e -> loadScenario("A"));
-        scenarioBBtn.setOnAction(e -> loadScenario("B"));
+        scenarioB1Btn.setOnAction(e -> loadScenario("B1"));
+        scenarioB2Btn.setOnAction(e -> loadScenario("B2"));
         scenarioCBtn.setOnAction(e -> loadScenario("C"));
         scenarioDBtn.setOnAction(e -> loadScenario("D"));
+        scenarioEBtn.setOnAction(e -> loadScenario("E"));
     }
 
-   
     private void loadScenario(String scenario) {
         clearAll();
         switch (scenario) {
             case "A" -> {
-                
+
                 processes.add(new Process("P1", 0, 8));
                 processes.add(new Process("P2", 1, 4));
                 processes.add(new Process("P3", 2, 9));
                 processes.add(new Process("P4", 3, 5));
                 quantumField.setText("3");
             }
-            case "B" -> {
-               
+            case "B1" -> {
+
                 processes.add(new Process("P1", 0, 6));
                 processes.add(new Process("P2", 0, 6));
                 processes.add(new Process("P3", 0, 6));
                 processes.add(new Process("P4", 0, 6));
                 quantumField.setText("1");
+            }
+            case "B2" -> {
+
+                processes.add(new Process("P1", 0, 6));
+                processes.add(new Process("P2", 0, 4));
+                processes.add(new Process("P3", 0, 2));
+                quantumField.setText("5");
             }
             case "C" -> {
                 // Short-Job-Heavy
@@ -170,19 +231,33 @@ public class MainController {
                 processes.add(new Process("P5", 4, 5));
                 quantumField.setText("2");
             }
+            case "E" -> {
+
+                processes.add(new Process("P1", 0, 5));
+                quantumField.setText("0");
+            }
         }
     }
 
     private void addProcess() {
         try {
             String id = pidField.getText().trim();
-            if (id.isEmpty()) { showError("Process ID cannot be empty!"); return; }
+            if (id.isEmpty()) {
+                showError("Process ID cannot be empty!");
+                return;
+            }
 
             int at = Integer.parseInt(arrivalField.getText().trim());
             int bt = Integer.parseInt(burstField.getText().trim());
 
-            if (at < 0)  { showError("Arrival Time cannot be negative!"); return; }
-            if (bt <= 0) { showError("Burst Time must be greater than 0!"); return; }
+            if (at < 0) {
+                showError("Arrival Time cannot be negative!");
+                return;
+            }
+            if (bt <= 0) {
+                showError("Burst Time must be greater than 0!");
+                return;
+            }
 
             for (Process p : processes) {
                 if (p.getId().equals(id)) {
@@ -192,7 +267,9 @@ public class MainController {
             }
 
             processes.add(new Process(id, at, bt));
-            pidField.clear(); arrivalField.clear(); burstField.clear();
+            pidField.clear();
+            arrivalField.clear();
+            burstField.clear();
             pidField.requestFocus();
             System.out.println("[INFO] Process " + id + " added! Total: " + processes.size());
 
@@ -201,11 +278,15 @@ public class MainController {
         }
     }
 
-    private void refreshProcessTable() { /* ObservableList updates automatically */ }
+    private void refreshProcessTable() {
+        /* ObservableList updates automatically */ }
 
     private void deleteSelected() {
         Process selected = processTable.getSelectionModel().getSelectedItem();
-        if (selected == null) { showError("Please select a process to delete!"); return; }
+        if (selected == null) {
+            showError("Please select a process to delete!");
+            return;
+        }
         processes.remove(selected);
         rrTable.getItems().clear();
         srtfTable.getItems().clear();
@@ -237,15 +318,21 @@ public class MainController {
     }
 
     private void runSimulation() {
-        if (processes.isEmpty()) { showError("Please add at least one process first!"); return; }
+        if (processes.isEmpty()) {
+            showError("Please add at least one process first!");
+            return;
+        }
         try {
             int q = Integer.parseInt(quantumField.getText().trim());
-            if (q <= 0) { showError("Quantum must be greater than 0!"); return; }
+            if (q <= 0) {
+                showError("Quantum must be greater than 0!");
+                return;
+            }
 
-            List<Process> rrList   = cloneList(processes);
+            List<Process> rrList = cloneList(processes);
             List<Process> srtfList = cloneList(processes);
 
-            Result rrResult   = new RoundRobin(q).schedule(rrList);
+            Result rrResult = new RoundRobin(q).schedule(rrList);
             Result srtfResult = new SRTF().schedule(srtfList);
 
             rrTable.setItems(FXCollections.observableArrayList(rrResult.getFinishedProcesses()));
@@ -268,74 +355,75 @@ public class MainController {
     }
 
     private void showComparison(Result rr, Result srtf) {
-        double rrWT   = avg(rr.getFinishedProcesses(),   Process::getWaitingTime);
+        double rrWT = avg(rr.getFinishedProcesses(), Process::getWaitingTime);
         double srtfWT = avg(srtf.getFinishedProcesses(), Process::getWaitingTime);
-        double rrRT   = avg(rr.getFinishedProcesses(),   Process::getResponseTime);
+        double rrRT = avg(rr.getFinishedProcesses(), Process::getResponseTime);
         double srtfRT = avg(srtf.getFinishedProcesses(), Process::getResponseTime);
-        double rrTAT  = avg(rr.getFinishedProcesses(),   Process::getTurnaroundTime);
-        double srtfTAT= avg(srtf.getFinishedProcesses(), Process::getTurnaroundTime);
+        double rrTAT = avg(rr.getFinishedProcesses(), Process::getTurnaroundTime);
+        double srtfTAT = avg(srtf.getFinishedProcesses(), Process::getTurnaroundTime);
 
-        String wWt  = rrWT  < srtfWT  ? "RR" : srtfWT  < rrWT  ? "SRTF" : "Equal";
-        String wRt  = rrRT  < srtfRT  ? "RR" : srtfRT  < rrRT  ? "SRTF" : "Equal";
+        String wWt = rrWT < srtfWT ? "RR" : srtfWT < rrWT ? "SRTF" : "Equal";
+        String wRt = rrRT < srtfRT ? "RR" : srtfRT < rrRT ? "SRTF" : "Equal";
         String wTat = rrTAT < srtfTAT ? "RR" : srtfTAT < rrTAT ? "SRTF" : "Equal";
 
         comparisonTable.setItems(FXCollections.observableArrayList(
-                new ComparisonRow("Avg Wait Time", round(rrWT),  round(srtfWT),  wWt),
-                new ComparisonRow("Avg Resp Time", round(rrRT),  round(srtfRT),  wRt),
-                new ComparisonRow("Avg TAT",       round(rrTAT), round(srtfTAT), wTat)));
+                new ComparisonRow("Avg Wait Time", round(rrWT), round(srtfWT), wWt),
+                new ComparisonRow("Avg Resp Time", round(rrRT), round(srtfRT), wRt),
+                new ComparisonRow("Avg TAT", round(rrTAT), round(srtfTAT), wTat)));
     }
 
     private void showConclusion(Result rr, Result srtf, int quantum) {
-        double rrWT   = avg(rr.getFinishedProcesses(),   Process::getWaitingTime);
+        double rrWT = avg(rr.getFinishedProcesses(), Process::getWaitingTime);
         double srtfWT = avg(srtf.getFinishedProcesses(), Process::getWaitingTime);
-        double rrRT   = avg(rr.getFinishedProcesses(),   Process::getResponseTime);
+        double rrRT = avg(rr.getFinishedProcesses(), Process::getResponseTime);
         double srtfRT = avg(srtf.getFinishedProcesses(), Process::getResponseTime);
-        double rrTAT  = avg(rr.getFinishedProcesses(),   Process::getTurnaroundTime);
-        double srtfTAT= avg(srtf.getFinishedProcesses(), Process::getTurnaroundTime);
+        double rrTAT = avg(rr.getFinishedProcesses(), Process::getTurnaroundTime);
+        double srtfTAT = avg(srtf.getFinishedProcesses(), Process::getTurnaroundTime);
 
-        String betterWT  = rrWT  < srtfWT  ? "Round Robin" : srtfWT  < rrWT  ? "SRTF" : "Both equally";
-        String betterRT  = rrRT  < srtfRT  ? "Round Robin" : srtfRT  < rrRT  ? "SRTF" : "Both equally";
+        String betterWT = rrWT < srtfWT ? "Round Robin" : srtfWT < rrWT ? "SRTF" : "Both equally";
+        String betterRT = rrRT < srtfRT ? "Round Robin" : srtfRT < rrRT ? "SRTF" : "Both equally";
         String betterTAT = rrTAT < srtfTAT ? "Round Robin" : srtfTAT < rrTAT ? "SRTF" : "Both equally";
 
-        int rrMaxWT   = rr.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).max().orElse(0);
-        int rrMinWT   = rr.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).min().orElse(0);
+        int rrMaxWT = rr.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).max().orElse(0);
+        int rrMinWT = rr.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).min().orElse(0);
         int srtfMaxWT = srtf.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).max().orElse(0);
         int srtfMinWT = srtf.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).min().orElse(0);
         boolean rrFairer = (rrMaxWT - rrMinWT) <= (srtfMaxWT - srtfMinWT);
 
         StringBuilder sb = new StringBuilder();
         sb.append("1. Waiting Time: ").append(betterWT).append(" performed better")
-          .append(" (RR avg: ").append(round(rrWT)).append(", SRTF avg: ").append(round(srtfWT)).append(").\n\n");
+                .append(" (RR avg: ").append(round(rrWT)).append(", SRTF avg: ").append(round(srtfWT)).append(").\n\n");
         sb.append("2. Response Time: ").append(betterRT).append(" performed better")
-          .append(" (RR avg: ").append(round(rrRT)).append(", SRTF avg: ").append(round(srtfRT)).append(").\n\n");
+                .append(" (RR avg: ").append(round(rrRT)).append(", SRTF avg: ").append(round(srtfRT)).append(").\n\n");
         sb.append("3. Turnaround Time: ").append(betterTAT).append(" performed better")
-          .append(" (RR avg: ").append(round(rrTAT)).append(", SRTF avg: ").append(round(srtfTAT)).append(").\n\n");
+                .append(" (RR avg: ").append(round(rrTAT)).append(", SRTF avg: ").append(round(srtfTAT))
+                .append(").\n\n");
         sb.append("4. Fairness: ")
-          .append(rrFairer
-                  ? "Round Robin appeared fairer — WT spread was smaller (max-min = "
-                    + (rrMaxWT - rrMinWT) + " vs " + (srtfMaxWT - srtfMinWT) + " for SRTF)."
-                  : "SRTF showed smaller WT spread (" + (srtfMaxWT - srtfMinWT)
-                    + " vs " + (rrMaxWT - rrMinWT) + " for RR), favoring shorter jobs.")
-          .append("\n\n");
+                .append(rrFairer
+                        ? "Round Robin appeared fairer — WT spread was smaller (max-min = "
+                                + (rrMaxWT - rrMinWT) + " vs " + (srtfMaxWT - srtfMinWT) + " for SRTF)."
+                        : "SRTF showed smaller WT spread (" + (srtfMaxWT - srtfMinWT)
+                                + " vs " + (rrMaxWT - rrMinWT) + " for RR), favoring shorter jobs.")
+                .append("\n\n");
         sb.append("5. Effect of Quantum (Q=").append(quantum).append("): ")
-          .append("With quantum=").append(quantum)
-          .append(", Round Robin preempts every ").append(quantum).append(" time unit(s). ")
-          .append(quantum <= 2
-                  ? "A small quantum improves response time but increases context switches."
-                  : quantum >= 5
-                          ? "A large quantum reduces context switches but may delay short processes."
-                          : "A medium quantum balances responsiveness and overhead.")
-          .append("\n\n");
+                .append("With quantum=").append(quantum)
+                .append(", Round Robin preempts every ").append(quantum).append(" time unit(s). ")
+                .append(quantum <= 2
+                        ? "A small quantum improves response time but increases context switches."
+                        : quantum >= 5
+                                ? "A large quantum reduces context switches but may delay short processes."
+                                : "A medium quantum balances responsiveness and overhead.")
+                .append("\n\n");
         sb.append("6. Recommendation: ");
         if (srtfWT < rrWT && srtfTAT < rrTAT) {
             sb.append("SRTF is more efficient for this workload. ")
-              .append("Round Robin is preferable when fairness across all processes is a priority.");
+                    .append("Round Robin is preferable when fairness across all processes is a priority.");
         } else if (rrWT <= srtfWT && rrTAT <= srtfTAT) {
             sb.append("Round Robin performed competitively or better on this workload. ")
-              .append("SRTF may still be preferred for throughput-intensive environments.");
+                    .append("SRTF may still be preferred for throughput-intensive environments.");
         } else {
             sb.append("Results are mixed. SRTF is more efficient on some metrics; ")
-              .append("Round Robin provides fairer CPU distribution.");
+                    .append("Round Robin provides fairer CPU distribution.");
         }
 
         conclusionLabel.setText(sb.toString());
@@ -343,7 +431,9 @@ public class MainController {
     }
 
     @FunctionalInterface
-    interface Extractor { int get(Process p); }
+    interface Extractor {
+        int get(Process p);
+    }
 
     private double avg(List<Process> list, Extractor fn) {
         return list.stream().mapToInt(fn::get).average().orElse(0);
@@ -355,7 +445,8 @@ public class MainController {
 
     private List<Process> cloneList(List<Process> original) {
         List<Process> copy = new ArrayList<>();
-        for (Process p : original) copy.add(new Process(p));
+        for (Process p : original)
+            copy.add(new Process(p));
         return copy;
     }
 
@@ -368,35 +459,36 @@ public class MainController {
     }
 
     private void showFairnessAnalysis(Result rr, Result srtf, int quantum) {
-        double rrRT   = avg(rr.getFinishedProcesses(),   Process::getResponseTime);
+        double rrRT = avg(rr.getFinishedProcesses(), Process::getResponseTime);
         double srtfRT = avg(srtf.getFinishedProcesses(), Process::getResponseTime);
-        double rrWT   = avg(rr.getFinishedProcesses(),   Process::getWaitingTime);
+        double rrWT = avg(rr.getFinishedProcesses(), Process::getWaitingTime);
         double srtfWT = avg(srtf.getFinishedProcesses(), Process::getWaitingTime);
 
-        int rrMax   = rr.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).max().orElse(0);
-        int rrMin   = rr.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).min().orElse(0);
+        int rrMax = rr.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).max().orElse(0);
+        int rrMin = rr.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).min().orElse(0);
         int srtfMax = srtf.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).max().orElse(0);
         int srtfMin = srtf.getFinishedProcesses().stream().mapToInt(Process::getWaitingTime).min().orElse(0);
 
         rrFairnessLabel.setText(
                 "Every process gets CPU every " + quantum + " time unit(s).\n" +
-                "WT spread: " + (rrMax - rrMin) + " (max-min)\n" +
-                "Avg Response Time: " + round(rrRT) + "\n" +
-                "No process is starved regardless of burst time.");
+                        "WT spread: " + (rrMax - rrMin) + " (max-min)\n" +
+                        "Avg Response Time: " + round(rrRT) + "\n" +
+                        "No process is starved regardless of burst time.");
 
         srtfEfficiencyLabel.setText(
                 "Always runs the shortest remaining job.\n" +
-                "WT spread: " + (srtfMax - srtfMin) + " (max-min)\n" +
-                "Avg Response Time: " + round(srtfRT) + "\n" +
-                "Short jobs finish fast; long jobs may wait.");
+                        "WT spread: " + (srtfMax - srtfMin) + " (max-min)\n" +
+                        "Avg Response Time: " + round(srtfRT) + "\n" +
+                        "Short jobs finish fast; long jobs may wait.");
 
-        boolean rrFairer      = (rrMax - rrMin) <= (srtfMax - srtfMin);
+        boolean rrFairer = (rrMax - rrMin) <= (srtfMax - srtfMin);
         boolean srtfEfficient = srtfWT < rrWT;
 
         fairnessVerdictLabel.setText(
                 "Verdict: " +
-                (rrFairer ? "Round Robin is fairer (smaller WT spread). " : "SRTF has a smaller WT spread. ") +
-                (srtfEfficient ? "SRTF is more efficient (lower avg WT)." : "Round Robin achieved competitive efficiency."));
+                        (rrFairer ? "Round Robin is fairer (smaller WT spread). " : "SRTF has a smaller WT spread. ") +
+                        (srtfEfficient ? "SRTF is more efficient (lower avg WT)."
+                                : "Round Robin achieved competitive efficiency."));
         fairnessVerdictLabel.setStyle("-fx-text-fill: #92400e; -fx-font-size: 12px; -fx-font-weight: bold;");
     }
 }

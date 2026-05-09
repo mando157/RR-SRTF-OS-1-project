@@ -30,12 +30,26 @@
                            -fx-padding: 6 12 6 12; -fx-background-radius: 8;
                            -fx-border-color: #ea580c; -fx-border-radius: 8;
                            -fx-cursor: hand;"/>
-            <Button fx:id="scenarioBBtn" text="Scenario B — Quantum"
+            <!-- <Button fx:id="scenarioBBtn" text="Scenario B — Quantum"
                     style="-fx-background-color: #ffedd5; -fx-text-fill: #c2410c;
                            -fx-font-weight: bold; -fx-font-size: 11px;
                            -fx-padding: 6 12 6 12; -fx-background-radius: 8;
                            -fx-border-color: #ea580c; -fx-border-radius: 8;
-                           -fx-cursor: hand;"/>
+                           -fx-cursor: hand;"/> -->
+
+                           <Button fx:id="scenarioB1Btn" text="Scenario B1 — Small Q"
+        style="-fx-background-color: #ffedd5; -fx-text-fill: #c2410c;
+               -fx-font-weight: bold; -fx-font-size: 11px;
+               -fx-padding: 6 12 6 12; -fx-background-radius: 8;
+               -fx-border-color: #ea580c; -fx-border-radius: 8;
+               -fx-cursor: hand;"/>
+<Button fx:id="scenarioB2Btn" text="Scenario B2 — Large Q"
+        style="-fx-background-color: #ffedd5; -fx-text-fill: #c2410c;
+               -fx-font-weight: bold; -fx-font-size: 11px;
+               -fx-padding: 6 12 6 12; -fx-background-radius: 8;
+               -fx-border-color: #ea580c; -fx-border-radius: 8;
+               -fx-cursor: hand;"/>
+
             <Button fx:id="scenarioCBtn" text="Scenario C — Short Jobs"
                     style="-fx-background-color: #ffedd5; -fx-text-fill: #c2410c;
                            -fx-font-weight: bold; -fx-font-size: 11px;
@@ -48,6 +62,13 @@
                            -fx-padding: 6 12 6 12; -fx-background-radius: 8;
                            -fx-border-color: #ea580c; -fx-border-radius: 8;
                            -fx-cursor: hand;"/>
+
+                           <Button fx:id="scenarioEBtn" text="Scenario E — Validation"
+        style="-fx-background-color: #fee2e2; -fx-text-fill: #dc2626;
+               -fx-font-weight: bold; -fx-font-size: 11px;
+               -fx-padding: 6 12 6 12; -fx-background-radius: 8;
+               -fx-border-color: #ef4444; -fx-border-radius: 8;
+               -fx-cursor: hand;"/>
         </HBox>
 
         <!-- PROCESS LIST -->
