@@ -118,20 +118,41 @@ It is used to verify the correctness of both scheduling algorithms under realist
 
 
 
-## Scenario B
 
-### Description
-This scenario uses a very small quantum value to demonstrate the effect of time slicing in Round Robin scheduling.
+##  Scenario B1 — Small Quantum
+
+###  Description
+This scenario uses a very small quantum value to demonstrate frequent context switching in Round Robin scheduling.
 
 ###  Purpose
-- Show the impact of quantum size
-- Demonstrate high context switching
-- Compare responsiveness and overhead
+- Show the effect of small quantum values
+- Demonstrate improved responsiveness
+- Highlight increased context switching overhead
+
+###  Observation
+Round Robin provides fast response time because every process gets CPU access quickly, but the number of context switches becomes very high.
  
 ![Scenario B](os-scheduler/src/screenshots/Scenario%20B1-1.png)
 ![Scenario B](os-scheduler/src/screenshots/Scenario%20B1-2.png)
 ![Scenario B](os-scheduler/src/screenshots/Scenario%20B1-3.png)
 
+##  Scenario B2 — Large Quantum
+
+###  Description
+This scenario uses a large quantum value to demonstrate how Round Robin behavior changes when time slicing becomes less frequent.
+
+###  Purpose
+- Show the effect of large quantum values
+- Reduce context switching overhead
+- Compare RR behavior with FCFS-like execution
+
+###  Observation
+As the quantum becomes larger, Round Robin starts behaving similarly to FCFS, reducing fairness and increasing waiting time for some processes.
+
+
+![Scenario B](os-scheduler/src/screenshots/Scenario%20B2-1.png)
+![Scenario B](os-scheduler/src/screenshots/Scenario%20B2-2.png)
+![Scenario B](os-scheduler/src/screenshots/Scenario%20B2-3.png)
 
 
 ## Scenario C
@@ -171,4 +192,5 @@ This scenario tests the system's ability to reject invalid input safely.
 - Prevent invalid scheduling behaviour
 - Ensure system robustness
 
+![Scenario E](os-scheduler/src/screenshots/Scenario%20E.png)
 
