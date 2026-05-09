@@ -4,7 +4,7 @@
 > A JavaFX desktop application that simulates and compares **Round Robin (RR)** and **Shortest Remaining Time First (SRTF)** CPU scheduling algorithms.
 
   
-## ✨ Features
+##  Features
  
 -  **Dynamic Process Input** — add any number of processes at runtime
 -  **Full Input Validation** — rejects invalid quantum, negative AT, BT=0, duplicate IDs
@@ -17,7 +17,7 @@
 -  **Preset Test Scenarios** — load A, B1, B2, C, D, E with one click
 -  **Delete / Clear** — manage process list easily
 
-## 🚀 How to Run
+##  How to Run
  
 ### Prerequisites
 - Java 17+
@@ -40,7 +40,7 @@ Or open in **IntelliJ IDEA** and run `MainFX.java`.
 
 
 
-## ⚙️ Algorithms
+##  Algorithms
  
 ### Round Robin
 - Processes are served in a circular queue
@@ -57,7 +57,7 @@ Or open in **IntelliJ IDEA** and run `MainFX.java`.
 
 
 
-## 📊 Metrics
+##  Metrics
  
 | Metric | Formula |
 |---|---|
@@ -68,7 +68,7 @@ Or open in **IntelliJ IDEA** and run `MainFX.java`.
  
 ---
  
-## 📝 Analysis & Conclusions
+##  Analysis & Conclusions
  
 | Metric | Better Algorithm |
 |---|---|
@@ -100,6 +100,75 @@ Or open in **IntelliJ IDEA** and run `MainFX.java`.
 - **CSS** — Styling
 - **Maven** — Build tool
 
+# Screenshots
 
+## Scenario A
+###  Description
+This scenario represents a normal mixed workload with different arrival times and burst times.  
+It is used to verify the correctness of both scheduling algorithms under realistic execution conditions.
+
+###  Purpose
+- Test basic scheduling behavior
+- Verify Gantt chart correctness
+- Compare fairness and efficiency
+  
+![Scenario A](os-scheduler/src/screenshots/Scenario%20A-1.png)
+![Scenario A](os-scheduler/src/screenshots/Scenario%20A-2.png)
+![Scenario A](os-scheduler/src/screenshots/Scenario%20A-3.png)
+
+
+
+## Scenario B
+
+### Description
+This scenario uses a very small quantum value to demonstrate the effect of time slicing in Round Robin scheduling.
+
+###  Purpose
+- Show the impact of quantum size
+- Demonstrate high context switching
+- Compare responsiveness and overhead
+ 
+![Scenario B](os-scheduler/src/screenshots/Scenario%20B1-1.png)
+![Scenario B](os-scheduler/src/screenshots/Scenario%20B1-2.png)
+![Scenario B](os-scheduler/src/screenshots/Scenario%20B1-3.png)
+
+
+
+## Scenario C
+###  Description
+This workload contains many short processes and one long process to highlight the behaviour of SRTF.
+
+###  Purpose
+- Demonstrate SRTF efficiency
+- Show fast completion of short jobs
+- Reveal possible starvation of long processes
+  
+![Scenario C](os-scheduler/src/screenshots/Scenario%20C-1.png)
+![Scenario C](os-scheduler/src/screenshots/Scenario%20C-2.png)
+![Scenario C](os-scheduler/src/screenshots/Scenario%20C-3.png)
+
+
+
+## Scenario D
+###  Description
+This scenario simulates an interactive system where processes arrive continuously and require fair CPU sharing.
+
+###  Purpose
+- Demonstrate Round Robin fairness
+- Compare response times
+- Show balanced CPU allocation
+  
+![Scenario D](os-scheduler/src/screenshots/Scenario%20D-1.png)
+![Scenario D](os-scheduler/src/screenshots/Scenario%20D-2.png)
+![Scenario D](os-scheduler/src/screenshots/Scenario%20D-3.png)
+
+## Scenario E
+###  Description
+This scenario tests the system's ability to reject invalid input safely.
+
+###  Purpose
+- Verify input validation
+- Prevent invalid scheduling behaviour
+- Ensure system robustness
 
 
