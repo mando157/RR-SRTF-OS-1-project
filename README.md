@@ -92,7 +92,7 @@ Or open in **IntelliJ IDEA** and run `MainFX.java`.
 - Use **Round Robin** for interactive/time-sharing systems where fairness matters
 
 
-## 🛠️ Technologies Used
+##  Technologies Used
  
 - **Java 17**
 - **JavaFX 17** — UI framework
